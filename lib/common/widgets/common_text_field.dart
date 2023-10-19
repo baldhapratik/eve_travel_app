@@ -1,6 +1,4 @@
-import 'package:eve_travel_app/utils/app_color.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:eve_travel_app/app_imports/app_imports.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -33,9 +31,9 @@ class CustomTextField extends StatelessWidget {
           onChanged: onChange,
           decoration: InputDecoration(
             constraints:
-                maxLength != null ? null : BoxConstraints(maxHeight: 80.h),
+                maxLength != null ? null : BoxConstraints(maxHeight: 60.h),
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                 EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
             hintText: hintText ?? '',
             hintStyle: const TextStyle(
                 color: AppColor.greyColor, fontWeight: FontWeight.w400),

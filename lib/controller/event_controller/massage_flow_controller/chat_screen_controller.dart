@@ -1,5 +1,4 @@
 import 'package:eve_travel_app/app_imports/app_imports.dart';
-
 class ChatScreenController extends GetxController {
   TextEditingController searchController = TextEditingController();
   RxList<ChatModel> chatList = <ChatModel>[].obs;

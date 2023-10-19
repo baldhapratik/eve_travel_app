@@ -1,22 +1,30 @@
-import 'package:eve_travel_app/routes/app_pages.dart';
-import 'package:eve_travel_app/routes/app_routes.dart';
-import 'package:eve_travel_app/utils/app_color.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
-import 'package:get/get.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:eve_travel_app/app_imports/app_imports.dart';
 
 void main() {
-  return runApp(FlutterSizer(
-    builder: (p0, p1, p2) {
-      return GetMaterialApp(
-        theme: ThemeData(
-          fontFamily: 'Saira',
-          scaffoldBackgroundColor: AppColor.whiteColor,
-        ),
-        debugShowCheckedModeBanner: false,
-        getPages: AppPages.pages,
-        initialRoute: AppRoutes.registerScreen,
-      );
-    },
-  ));
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ScreenUtilInit(
+      designSize: const Size(390, 844),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, child) {
+        return GetMaterialApp(
+          theme: ThemeData(
+            fontFamily: 'Saira',
+            scaffoldBackgroundColor: AppColor.whiteColor,
+          ),
+          debugShowCheckedModeBanner: false,
+          getPages: AppPages.pages,
+          initialRoute: AppRoutes.registerScreen,
+        );
+      },
+    );
+  }
 }

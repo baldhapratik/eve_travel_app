@@ -15,9 +15,13 @@ class FilterScreen extends GetView<FilterScreenController> {
         ),
         centerTitle: true,
         backgroundColor: AppColor.primaryColor,
-        title: const Text(
+        title: Text(
           AppText.filters,
-          style: TextStyle(fontWeight: FontWeight.w700),
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 20.sp,
+            color: AppColor.whiteColor,
+          ),
         ),
         actions: [
           Center(
@@ -27,38 +31,41 @@ class FilterScreen extends GetView<FilterScreenController> {
                 controller.selectedMoodIndices.clear();
                 controller.selectedBudgetIndices.clear();
               },
-              child: const Text(
+              child: Text(
                 AppText.clearAll,
                 style: TextStyle(
-                    fontWeight: FontWeight.w700, color: AppColor.whiteColor),
+                  fontSize: 15.sp,
+                  color: AppColor.whiteColor,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ),
           SizedBox(
-            width: 4.w,
+            width: 15.w,
           ),
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 4.w),
+        padding: EdgeInsets.symmetric(horizontal: 15.w),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           SizedBox(
-            height: 2.h,
+            height: 20.h,
           ),
           Text(
             AppText.typeOfEvent,
             style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: AppColor.blackColor,
-                fontSize: 15.dp),
+                fontSize: 15.sp),
           ),
           SizedBox(
-            height: 2.h,
+            height: 12.h,
           ),
           Obx(
             () => Wrap(
-              spacing: 10,
-              runSpacing: 15,
+              spacing: 8.w,
+              runSpacing: 8.w,
               children: controller.categories.asMap().entries.map(
                 (entry) {
                   final index = entry.key;
@@ -77,7 +84,7 @@ class FilterScreen extends GetView<FilterScreenController> {
                       }
                     },
                     child: Container(
-                      height: 5.h,
+                      height: 33.h,
                       decoration: BoxDecoration(
                         boxShadow: isSelected
                             ? [
@@ -96,14 +103,14 @@ class FilterScreen extends GetView<FilterScreenController> {
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 3.5.w, vertical: 1.h),
+                            horizontal: 12.w, vertical: 6.h),
                         child: Text(
                           category,
                           style: TextStyle(
                               color: isSelected
                                   ? AppColor.whiteColor
                                   : AppColor.blackColor,
-                              fontSize: 15.dp,
+                              fontSize: 15.sp,
                               fontWeight: FontWeight.w400),
                         ),
                       ),
@@ -114,22 +121,22 @@ class FilterScreen extends GetView<FilterScreenController> {
             ),
           ),
           SizedBox(
-            height: 4.h,
+            height: 24.h,
           ),
           Text(
             AppText.dressCode,
             style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: AppColor.blackColor,
-                fontSize: 15.dp),
+                fontSize: 15.sp),
           ),
           SizedBox(
-            height: 2.h,
+            height: 12.h,
           ),
           Obx(
             () => Wrap(
-              spacing: 10,
-              runSpacing: 15,
+              spacing: 8.w,
+              runSpacing: 8.w,
               children: controller.mood.asMap().entries.map(
                 (entry) {
                   final index = entry.key;
@@ -148,7 +155,8 @@ class FilterScreen extends GetView<FilterScreenController> {
                       }
                     },
                     child: Container(
-                      height: 5.h,
+                      height: 33.h,
+
                       decoration: BoxDecoration(
                         boxShadow: isSelected
                             ? [
@@ -167,14 +175,14 @@ class FilterScreen extends GetView<FilterScreenController> {
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 3.5.w, vertical: 1.h),
+                            horizontal: 12.w, vertical: 6.h),
                         child: Text(
                           category,
                           style: TextStyle(
                               color: isSelected
                                   ? AppColor.whiteColor
                                   : AppColor.blackColor,
-                              fontSize: 15.dp,
+                              fontSize: 15.sp,
                               fontWeight: FontWeight.w400),
                         ),
                       ),
@@ -185,17 +193,14 @@ class FilterScreen extends GetView<FilterScreenController> {
             ),
           ),
           SizedBox(
-            height: 4.h,
+            height: 24.h,
           ),
           Text(
             AppText.price,
             style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: AppColor.blackColor,
-                fontSize: 15.dp),
-          ),
-          SizedBox(
-            height: 1.h,
+                fontSize: 15.sp),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -204,7 +209,7 @@ class FilterScreen extends GetView<FilterScreenController> {
               Text(AppText.onlyFREEEvents,
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 15.dp,
+                      fontSize: 15.sp,
                       color: AppColor.blackColor)),
               Obx(
                 () => CupertinoSwitch(
@@ -219,22 +224,22 @@ class FilterScreen extends GetView<FilterScreenController> {
             ],
           ),
           SizedBox(
-            height: 4.h,
+            height: 24.h,
           ),
           Text(
             AppText.date,
             style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: AppColor.blackColor,
-                fontSize: 15.dp),
+                fontSize: 15.sp),
           ),
           SizedBox(
-            height: 1.h,
+            height: 12.h,
           ),
           Obx(
             () => Wrap(
-              spacing: 10,
-              runSpacing: 15,
+              spacing: 8.w,
+              runSpacing: 8.w,
               children: controller.budget.asMap().entries.map(
                 (entry) {
                   final index = entry.key;
@@ -253,7 +258,8 @@ class FilterScreen extends GetView<FilterScreenController> {
                       }
                     },
                     child: Container(
-                      height: 5.h,
+                      height: 33.h,
+
                       decoration: BoxDecoration(
                         boxShadow: isSelected
                             ? [
@@ -272,14 +278,14 @@ class FilterScreen extends GetView<FilterScreenController> {
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 3.5.w, vertical: 1.h),
+                            horizontal: 12.w, vertical: 6.h),
                         child: Text(
                           category,
                           style: TextStyle(
                               color: isSelected
                                   ? AppColor.whiteColor
                                   : AppColor.blackColor,
-                              fontSize: 15.dp,
+                              fontSize: 15.sp,
                               fontWeight: FontWeight.w400),
                         ),
                       ),
@@ -290,14 +296,14 @@ class FilterScreen extends GetView<FilterScreenController> {
             ),
           ),
           SizedBox(
-            height: 1.h,
+            height: 12.h,
           ),
           Text(
             AppText.chooseADate,
             style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: AppColor.blueColor,
-                fontSize: 15.dp),
+                fontSize: 15.sp),
           ),
           SizedBox(
             height: 1.h,

@@ -1,6 +1,5 @@
 import 'package:eve_travel_app/app_imports/app_imports.dart';
 
-
 class CreateAccountScreen extends GetView<CreateAccountController> {
   const CreateAccountScreen({super.key});
 
@@ -15,7 +14,7 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
           child: Icon(
             Icons.arrow_back,
             color: AppColor.blackColor,
-            size: 25.dp,
+            size: 20.sp,
           ),
         ),
         elevation: 0,
@@ -23,7 +22,7 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
       ),
       body: SafeArea(
           child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 4.w),
+        padding: EdgeInsets.symmetric(horizontal: 15.w),
         child: Form(
           key: controller.formKey,
           child: SingleChildScrollView(
@@ -31,17 +30,17 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 1.h,
+                  height: 20.h,
                 ),
                 Text(
                   AppText.createAccount,
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: AppColor.blackColor,
-                      fontSize: 20.dp),
+                      fontSize: 20.sp),
                 ),
                 SizedBox(
-                  height: 2.h,
+                  height: 8.h,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 3.w),
@@ -51,13 +50,16 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         color: AppColor.greyColor,
-                        fontSize: 15.dp),
+                        fontSize: 15.sp),
                   ),
                 ),
                 SizedBox(
-                  height: 3.h,
+                  height: 32.h,
                 ),
                 CustomTextField(
+                  onChange: (p0) {
+                    controller.validateLoginField();
+                  },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return AppText.pleaseEnterAnEmailAddress;
@@ -73,9 +75,12 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                   hintText: AppText.emailAddress,
                 ),
                 SizedBox(
-                  height: 2.h,
+                  height: 20.h,
                 ),
                 CustomTextField(
+                  onChange: (p0) {
+                    controller.validateLoginField();
+                  },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return AppText.pleaseEnterAPassword;
@@ -86,9 +91,12 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                   hintText: AppText.password,
                 ),
                 SizedBox(
-                  height: 2.h,
+                  height: 20.h,
                 ),
                 CustomTextField(
+                  onChange: (p0) {
+                    controller.validateLoginField();
+                  },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return AppText.pleaseEnterCity;
@@ -99,7 +107,7 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                   hintText: AppText.cityAddress,
                 ),
                 SizedBox(
-                  height: 2.h,
+                  height: 10.h,
                 ),
                 Row(
                   children: [
@@ -113,8 +121,8 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                       },
                       child: Obx(
                         () => Container(
-                          height: 3.h,
-                          width: 7.w,
+                          height: 26.h,
+                          width: 26.w,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: controller.rememberMe.isFalse
@@ -137,61 +145,67 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                       ),
                     ),
                     SizedBox(
-                      width: 3.w,
+                      width: 8.w,
                     ),
                     Text(
                       AppText.rememberMe,
                       style: TextStyle(
-                          fontSize: 15.dp,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.w400,
                           color: AppColor.greyColor),
                     )
                   ],
                 ),
                 SizedBox(
-                  height: 3.h,
+                  height: 26.h,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 4.w),
-                  child: CustomButton(
-                      onTap: () {
-                        FocusScope.of(context).unfocus();
-                        if (controller.formKey.currentState!.validate()) {
-                          Get.offAllNamed(AppRoutes.mainScreen);
-                        }
-                      },
-                      labelColor: AppColor.blackColor.withOpacity(0.4),
-                      buttonColor: AppColor.greyColor.withOpacity(0.2),
-                      labelName: AppText.createAnAccount),
+                  child: Obx(
+                    () => CustomButton(
+                        onTap: () {
+                          FocusScope.of(context).unfocus();
+                          if (controller.formKey.currentState!.validate()) {
+                            Get.offAllNamed(AppRoutes.mainScreen);
+                          }
+                        },
+                        labelColor: controller.validate.value
+                            ? AppColor.whiteColor
+                            : AppColor.blackColor.withOpacity(0.4),
+                        buttonColor: controller.validate.value
+                            ? AppColor.primaryColor
+                            : AppColor.greyColor.withOpacity(0.2),
+                        labelName: AppText.createAnAccount),
+                  ),
                 ),
                 SizedBox(
-                  height: 4.h,
+                  height: 40.h,
                 ),
                 Text(
                   AppText.orCreateAccountWith,
                   style:
-                      TextStyle(fontSize: 15.dp, fontWeight: FontWeight.w400),
+                      TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w400),
                 ),
                 SizedBox(
-                  height: 2.h,
+                  height: 12.h,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomSmallButton(onTap: () {}, image: AppImages.appleImg),
                     SizedBox(
-                      width: 3.w,
+                      width: 12.w,
                     ),
                     CustomSmallButton(
                         onTap: () {}, image: AppImages.facebookImg),
                     SizedBox(
-                      width: 3.w,
+                      width: 12.w,
                     ),
                     CustomSmallButton(onTap: () {}, image: AppImages.googleImg),
                   ],
                 ),
                 SizedBox(
-                  height: 5.h,
+                  height: 78.h,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -200,11 +214,11 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                       AppText.alreadyHaveAnAccount,
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
-                          fontSize: 15.dp,
+                          fontSize: 15.sp,
                           color: AppColor.blackColor),
                     ),
                     SizedBox(
-                      width: 1.w,
+                      width: 3.w,
                     ),
                     InkWell(
                       onTap: () {
@@ -214,14 +228,14 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                         AppText.signIn,
                         style: TextStyle(
                             fontWeight: FontWeight.w400,
-                            fontSize: 15.dp,
+                            fontSize: 15.sp,
                             color: AppColor.primaryColor),
                       ),
                     ),
                   ],
                 ),
                 SizedBox(
-                  height: 3.h,
+                  height: 20.h,
                 ),
                 Divider(
                   color: AppColor.greyColor.withOpacity(0.5),
@@ -229,11 +243,11 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                   thickness: 1,
                 ),
                 SizedBox(
-                  height: 2.h,
+                  height: 12.h,
                 ),
                 Text(
                   AppText.termsAndCondition,
-                  style: TextStyle(fontSize: 13.dp, color: AppColor.greyColor),
+                  style: TextStyle(fontSize: 13.sp, color: AppColor.greyColor),
                 ),
                 SizedBox(
                   height: 3.h,

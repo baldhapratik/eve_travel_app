@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
-
-import '../../utils/app_color.dart';
+import 'package:eve_travel_app/app_imports/app_imports.dart';
 
 class CustomButtonWithBorder extends StatelessWidget {
   const CustomButtonWithBorder({
@@ -18,7 +15,7 @@ class CustomButtonWithBorder extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        height: 5.5.h,
+        height: 44.h,
         decoration: BoxDecoration(
           border: Border.all(
             color: AppColor.primaryColor,

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:eve_travel_app/app_imports/app_imports.dart';
+
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -16,11 +16,12 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return InkWell(
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        height: 5.5.h,
+        height: 45.h,
         decoration: BoxDecoration(
           // border: Border.all(
           //   color: AppColor.primaryColor,
@@ -31,7 +32,7 @@ class CustomButton extends StatelessWidget {
         child: Center(
           child: Text(
             labelName,
-            style: TextStyle(fontWeight: FontWeight.w600,color: labelColor,fontSize: 15.dp),
+            style: TextStyle(fontWeight: FontWeight.w600,color: labelColor,fontSize: 15.sp),
           ),
         ),
       ),

@@ -5,7 +5,6 @@ class ChatScreen extends GetView<ChatScreenController> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: const Color(0xFFF4F4F4),
       appBar: AppBar(
@@ -16,56 +15,71 @@ class ChatScreen extends GetView<ChatScreenController> {
             Get.back();
           },
         ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        title: Row(
           children: [
-            Text(
-              'Bachelor party',
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15.dp),
+            CircleAvatar(
+              maxRadius: 20.sp,
+              child: const Image(
+                  image: AssetImage('assets/images/Mask group.png')),
             ),
-            Text(
-              '3 members',
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 10.dp),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Bachelor party',
+                    style:
+                        TextStyle(fontWeight: FontWeight.w600, fontSize: 15.sp),
+                  ),
+                  Text(
+                    '3 members',
+                    style:
+                        TextStyle(fontWeight: FontWeight.w400, fontSize: 10.sp),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
         actions: [
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 2.5.h, horizontal: 3.w),
+            padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 3.w),
             child: Image(
               image: const AssetImage(AppImages.userAddImg),
               color: AppColor.whiteColor,
               fit: BoxFit.fill,
-              width: 5.w,
+              width: 20.w,
+              height: 20.h,
             ),
           ),
           SizedBox(
-            width: 1.w,
+            width: 15.w,
           ),
         ],
       ),
       body: Column(children: [
         SizedBox(
-          height: 0.1.h,
+          height: 1.h,
         ),
         Container(
-          height: 5.h,
+          height: 34.h,
           decoration: const BoxDecoration(color: AppColor.primaryColor),
           child: Row(
             children: [
               SizedBox(
-                width: 4.w,
+                width: 15.w,
               ),
               Icon(Icons.location_on_outlined,
-                  color: AppColor.whiteColor, size: 20.dp),
+                  color: AppColor.whiteColor, size: 20.sp),
               SizedBox(
-                width: 1.w,
+                width: 4.w,
               ),
               Text(
                 'Rishtedar, Miami, FL',
                 style: TextStyle(
                     color: AppColor.whiteColor,
-                    fontSize: 15.dp,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.w400),
               ),
               const Spacer(),
@@ -73,27 +87,27 @@ class ChatScreen extends GetView<ChatScreenController> {
                 'Dinner /Drinks',
                 style: TextStyle(
                     color: AppColor.whiteColor.withOpacity(0.8),
-                    fontSize: 15.dp,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.w400),
               ),
               SizedBox(
-                width: 3.w,
+                width: 15.w,
               ),
             ],
           ),
         ),
         SizedBox(
-          height: 1.h,
+          height: 12.h,
         ),
         Text(
           'Today',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               color: AppColor.greyColor,
-              fontSize: 15.dp),
+              fontSize: 15.sp),
         ),
         SizedBox(
-          height: 1.h,
+          height: 20.h,
         ),
         Expanded(
           child: Obx(
@@ -110,86 +124,106 @@ class ChatScreen extends GetView<ChatScreenController> {
                   children: [
                     if (!chatMessage.isMe) ...[
                       SizedBox(
-                        width: 2.w,
+                        width: 15.w,
                       ),
-                      const CircleAvatar(
+                      CircleAvatar(
+                        maxRadius: 20.sp,
                         backgroundImage:
-                            AssetImage('assets/images/Mask group-1.png'),
+                            const AssetImage('assets/images/Mask group-1.png'),
                       ),
-                      SizedBox(width: 2.w),
+                      SizedBox(width: 10.w),
                     ],
-                    Container(
-                      constraints: BoxConstraints(maxWidth: 80.w),
-                      decoration: BoxDecoration(
-                        color: chatMessage.isMe
-                            ? AppColor.darkBlueColor
-                            : AppColor.lightBlueColor,
-                        borderRadius: chatMessage.isMe
-                            ? const BorderRadius.only(
-                                topLeft: Radius.circular(12.0),
-                                bottomLeft: Radius.circular(12.0),
-                                bottomRight: Radius.circular(12.0),
-                              )
-                            : const BorderRadius.only(
-                                topRight: Radius.circular(12.0),
-                                bottomLeft: Radius.circular(12.0),
-                                bottomRight: Radius.circular(12.0),
-                              ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 3.w, vertical: 2.h),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            !chatMessage.isMe
-                                ? Padding(
-                                  padding: EdgeInsets.only(bottom: 0.5.h),
-                                  child: Text(
-                                      chatMessage.sender ?? '',
-                                      style: TextStyle(
-                                        fontSize: 13.dp,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColor.blueColor,
-                                      ),
-                                    ),
-                                )
-                                : const SizedBox(),
-                            Text(
-                              chatMessage.massage,
-                              style: TextStyle(
-                                fontSize: 13.dp,
-                                fontWeight: FontWeight.w400,
-                                color: chatMessage.isMe
-                                    ? AppColor.whiteColor
-                                    : AppColor.blackColor,
-                              ),
+                    Column(
+                      crossAxisAlignment: chatMessage.isMe
+                          ? CrossAxisAlignment.end
+                          : CrossAxisAlignment.start,
+                      mainAxisAlignment: chatMessage.isMe
+                          ? MainAxisAlignment.end
+                          : MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 310.w),
+                          decoration: BoxDecoration(
+                            color: chatMessage.isMe
+                                ? AppColor.darkBlueColor
+                                : AppColor.lightBlueColor,
+                            borderRadius: chatMessage.isMe
+                                ? const BorderRadius.only(
+                                    topLeft: Radius.circular(12.0),
+                                    bottomLeft: Radius.circular(12.0),
+                                    // bottomRight: Radius.circular(12.0),
+                                    topRight: Radius.circular(12.0),
+                                  )
+                                : const BorderRadius.only(
+                                    topRight: Radius.circular(12.0),
+                                    // bottomLeft: Radius.circular(12.0),
+                                    bottomRight: Radius.circular(12.0),
+                                    topLeft: Radius.circular(12.0)),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15.w, vertical: 15.h),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                !chatMessage.isMe
+                                    ? Padding(
+                                        padding: EdgeInsets.only(bottom: 0.5.h),
+                                        child: Text(
+                                          chatMessage.sender ?? '',
+                                          style: TextStyle(
+                                            fontSize: 13.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColor.blueColor,
+                                          ),
+                                        ),
+                                      )
+                                    : const SizedBox(),
+                                Text(
+                                  chatMessage.massage,
+                                  style: TextStyle(
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: chatMessage.isMe
+                                        ? AppColor.whiteColor
+                                        : AppColor.blackColor,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
+                        Text(
+                          '13:10 am',
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.greyColor,
+                          ),
+                        ),
+                      ],
                     ),
                     if (chatMessage.isMe) ...[
-                      SizedBox(width: 2.w),
+                      SizedBox(width: 10.w),
                       const CircleAvatar(
                         backgroundImage:
                             AssetImage('assets/images/Mask group.png'),
                       ),
                       SizedBox(
-                        width: 2.w,
+                        width: 15.w,
                       ),
                     ],
                   ],
                 );
               },
-              separatorBuilder: (context, index) => SizedBox(height: 2.h),
+              separatorBuilder: (context, index) => SizedBox(height: 12.h),
               itemCount: controller.chatList.length,
             ),
           ),
         ),
         SizedBox(
-          height: 10.h,
+          height: 94.h,
           child: Column(children: [
             Divider(
               height: 1.h,
@@ -199,7 +233,7 @@ class ChatScreen extends GetView<ChatScreenController> {
             Expanded(
               child: Center(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 4.w),
+                  padding: EdgeInsets.symmetric(horizontal: 15.w),
                   child: Row(
                     children: [
                       Expanded(
@@ -212,14 +246,14 @@ class ChatScreen extends GetView<ChatScreenController> {
                                 horizontal: 20, vertical: 0.5.h),
                             hintText: 'And what about the nightlife? Any ideas',
                             hintStyle: TextStyle(
-                                fontSize: 13.dp, color: AppColor.blackColor),
+                                fontSize: 13.sp, color: AppColor.blackColor),
                             border: const OutlineInputBorder(
                                 borderSide: BorderSide.none),
                           ),
                         ),
                       ),
                       SizedBox(
-                        width: 2.w,
+                        width: 10.w,
                       ),
                       InkWell(
                         onTap: () {
@@ -251,7 +285,9 @@ class ChatScreen extends GetView<ChatScreenController> {
                         },
                         child: Image(
                           image: const AssetImage(AppImages.sendImg),
-                          height: 3.h,
+                          fit: BoxFit.fill,
+                          height: 24.h,
+                          width: 24.w,
                         ),
                       )
                     ],
@@ -260,7 +296,7 @@ class ChatScreen extends GetView<ChatScreenController> {
               ),
             )
           ]),
-        )
+        ),
       ]),
     );
   }

@@ -1,8 +1,4 @@
-import 'package:eve_travel_app/utils/app_color.dart';
-import 'package:eve_travel_app/utils/app_images.dart';
-import 'package:eve_travel_app/utils/app_string.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:eve_travel_app/app_imports/app_imports.dart';
 
 class CustomProductContainer extends StatelessWidget {
   final String productImage;
@@ -14,18 +10,23 @@ class CustomProductContainer extends StatelessWidget {
   final List? friendsImages;
   final GestureTapCallback? onTapContainer;
   final GestureTapCallback? onTapChat;
+  final GestureTapCallback? onTapNotification;
+  final GestureTapCallback? onTapShare;
 
-  const CustomProductContainer(
-      {super.key,
-      required this.productImage,
-      required this.dateTime,
-      required this.productName,
-      required this.location,
-      required this.productPrice,
-      this.friendsInterested,
-      this.friendsImages,
-      required this.onTapContainer,
-      required this.onTapChat});
+  const CustomProductContainer({
+    super.key,
+    required this.productImage,
+    required this.dateTime,
+    required this.productName,
+    required this.location,
+    required this.productPrice,
+    this.friendsInterested,
+    this.friendsImages,
+    required this.onTapContainer,
+    required this.onTapNotification,
+    required this.onTapShare,
+    required this.onTapChat,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,36 +36,80 @@ class CustomProductContainer extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             border: Border.all(color: AppColor.greyColor.withOpacity(0.5))),
-        height: 43.h,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5.w),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 2.h),
-              Center(
-                child: Container(
-                  height: 20.h,
-                  width: 80.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                          image: AssetImage(productImage), fit: BoxFit.fill)),
+              Container(
+                height: 200.h,
+                width: 320.w,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                        image: AssetImage(productImage), fit: BoxFit.fill)),
+                child: Padding(
+                  padding: EdgeInsets.only(right: 15.w, top: 10.h),
+                  child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InkWell(
+                          onTap: onTapNotification,
+                          child: Container(
+                            height: 35.h,
+                            width: 35.w,
+                            decoration: BoxDecoration(
+                                color: AppColor.blackColor.withOpacity(0.3),
+                                shape: BoxShape.circle),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 9.w, vertical: 9.w),
+                              child: const Image(
+                                image: AssetImage(AppImages.notificationImg),
+                                color: AppColor.whiteColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8.w,
+                        ),
+                        InkWell(
+                          onTap: onTapShare,
+                          child: Container(
+                            height: 32.h,
+                            width: 32.w,
+                            decoration: BoxDecoration(
+                                color: AppColor.blackColor.withOpacity(0.3),
+                                shape: BoxShape.circle),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 7.w, vertical: 7.w),
+                              child: const Image(
+                                image: AssetImage(AppImages.shareImg),
+                                color: AppColor.whiteColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ]),
                 ),
               ),
-              SizedBox(height: 1.h),
+              SizedBox(height: 5.h),
               Text(
                 dateTime,
                 style: TextStyle(
-                    fontSize: 12.dp,
+                    fontSize: 12.sp,
                     color: AppColor.orangeColor,
                     fontWeight: FontWeight.w400),
               ),
-              SizedBox(height: 0.5.h),
+              SizedBox(height: 4.h),
               Text(
                 productName,
                 style: TextStyle(
-                    fontSize: 15.dp,
+                    fontSize: 15.sp,
                     color: AppColor.blackColor,
                     fontWeight: FontWeight.w600),
               ),
@@ -75,20 +120,20 @@ class CustomProductContainer extends StatelessWidget {
                   Text(
                     location,
                     style: TextStyle(
-                        fontSize: 12.dp,
+                        fontSize: 12.sp,
                         color: AppColor.greyColor,
                         fontWeight: FontWeight.w400),
                   ),
                   Text(
                     productPrice,
                     style: TextStyle(
-                        fontSize: 13.dp,
+                        fontSize: 13.sp,
                         color: AppColor.blackColor,
                         fontWeight: FontWeight.w600),
                   ),
                 ],
               ),
-              SizedBox(height: 1.h),
+              SizedBox(height: 4.h),
               // friendsImages != null
               //     ? SizedBox(
               //         height: 5.h,
@@ -111,75 +156,74 @@ class CustomProductContainer extends StatelessWidget {
               //         ),
               //       )
               //     : const SizedBox(),
-          Row(
-            children: [
-              Stack(
+              Row(
+                children: [
+                  Stack(
+                    children: [
+                      CircleAvatar(
+                        maxRadius: 10.sp,
+                        child: const Image(
+                          image: AssetImage('assets/images/Mask group.png'),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 7.w),
+                        child: CircleAvatar(
+                          maxRadius: 10.sp,
+                          child: const Image(
+                              image:
+                                  AssetImage('assets/images/Mask group-1.png')),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 9.w),
+                        child: CircleAvatar(
+                          maxRadius: 10.sp,
+                          child: const Image(
+                              image:
+                                  AssetImage('assets/images/Mask group-2.png')),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: 3.w,
+                  ),
+                  Text(
+                    friendsInterested ?? '',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColor.blackColor,
+                      height: 16 / 12,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  const Spacer(),
+                  InkWell(
+                    onTap: onTapChat,
+                    child: Row(
                       children: [
+                        Image(
+                          image: const AssetImage(AppImages.chatImg),
+                          width: 20.w,
+                          height: 20.h,
+                        ),
                         SizedBox(
-                          height: 4.h,
-                          child: const CircleAvatar(
-                            child: Image(
-                              image: AssetImage('assets/images/Mask group.png'),
-                            ),
-                          ),
+                          width: 6.w,
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 3.w),
-                          child: SizedBox(
-                            height: 4.h,
-                            child: const CircleAvatar(
-                              child: Image(
-                                  image: AssetImage(
-                                      'assets/images/Mask group-1.png')),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 6.w),
-                          child: SizedBox(
-                            height: 4.h,
-                            child: const CircleAvatar(
-                              child: Image(
-                                  image: AssetImage(
-                                      'assets/images/Mask group-2.png')),
-                            ),
-                          ),
+                        Text(
+                          AppText.chat,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.primaryColor,
+                              fontSize: 15.sp),
                         ),
                       ],
                     ),
-              Text(
-                friendsInterested ?? '',
-                style: TextStyle(
-                  fontSize: 12.dp,
-                  fontWeight: FontWeight.w500,
-                  color: AppColor.blackColor,
-                  height: 16 / 12,
-                ),
-                textAlign: TextAlign.left,
+                  ),
+                ],
               ),
-              const Spacer(),
-              InkWell(
-                onTap: onTapChat,
-                child: Row(
-                  children: [
-                    Image(
-                      image: const AssetImage(AppImages.chatImg),
-                      width: 10.w,
-                      height: 3.h,
-                    ),
-                    Text(
-                      AppText.chat,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.primaryColor,
-                          fontSize: 15.dp),
-                    ),
-
-                  ],
-                ),
-              ),
-            ],
-          ),
               // friendsInterested!.isNotEmpty ?
               // Row(
               //   children: [

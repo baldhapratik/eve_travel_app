@@ -10,26 +10,26 @@ class RegisterScreen extends GetView<RegisterController> {
       body: SafeArea(
           child: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 4.w),
+          padding: EdgeInsets.symmetric(horizontal: 15.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 AppText.welcomeToEve,
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.dp),
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.sp),
               ),
               SizedBox(
-                height: 3.h,
+                height: 23.h,
               ),
               Image(
                 image: const AssetImage(AppImages.appLogo),
-                height: 13.h,
+                height: 97.h,
                 fit: BoxFit.fill,
-                width: 27.w,
+                width: 97.w,
               ),
               SizedBox(
-                height: 10.h,
+                height: 110.h,
               ),
               CustomButton(
                   onTap: () {
@@ -39,7 +39,7 @@ class RegisterScreen extends GetView<RegisterController> {
                   buttonColor: AppColor.primaryColor,
                   labelName: AppText.createAnAccount),
               SizedBox(
-                height: 2.h,
+                height: 12.h,
               ),
               CustomButtonWithBorder(
                   onTap: () {
@@ -48,12 +48,12 @@ class RegisterScreen extends GetView<RegisterController> {
                   child: Text(
                     AppText.signIn,
                     style: TextStyle(
-                        fontSize: 15.dp,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w600,
                         color: AppColor.primaryColor),
                   )),
               SizedBox(
-                height: 3.h,
+                height: 32.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +69,7 @@ class RegisterScreen extends GetView<RegisterController> {
                     child: Text(
                       AppText.or,
                       style: TextStyle(
-                          fontSize: 10.dp,
+                          fontSize: 10.sp,
                           fontWeight: FontWeight.w500,
                           color: AppColor.greyColor),
                     ),
@@ -83,7 +83,7 @@ class RegisterScreen extends GetView<RegisterController> {
                 ],
               ),
               SizedBox(
-                height: 3.h,
+                height: 32.h,
               ),
               CustomButtonWithBorder(
                   onTap: () {},
@@ -91,12 +91,12 @@ class RegisterScreen extends GetView<RegisterController> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 5.w),
+                        padding: EdgeInsets.only(left: 12.w),
                         child: Image(
                           image: const AssetImage(AppImages.appleImg),
                           fit: BoxFit.fill,
-                          height: 3.h,
-                          width: 6.5.w,
+                          height: 24.h,
+                          width: 24.w,
                         ),
                       ),
                       Expanded(
@@ -105,7 +105,7 @@ class RegisterScreen extends GetView<RegisterController> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: AppColor.blackColor,
-                              fontSize: 15.dp,
+                              fontSize: 15.sp,
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -115,7 +115,7 @@ class RegisterScreen extends GetView<RegisterController> {
                     ],
                   )),
               SizedBox(
-                height: 3.h,
+                height: 12.h,
               ),
               CustomButtonWithBorder(
                   onTap: () {},
@@ -123,12 +123,13 @@ class RegisterScreen extends GetView<RegisterController> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 5.w),
+                        padding: EdgeInsets.only(left: 12.w),
+
                         child: Image(
                           image: const AssetImage(AppImages.facebookImg),
                           fit: BoxFit.fill,
-                          height: 3.h,
-                          width: 6.5.w,
+                          height: 24.h,
+                          width: 24.w,
                         ),
                       ),
                       Expanded(
@@ -139,7 +140,7 @@ class RegisterScreen extends GetView<RegisterController> {
                               AppText.continueWithFacebook,
                               style: TextStyle(
                                   color: AppColor.blackColor,
-                                  fontSize: 15.dp,
+                                  fontSize: 15.sp,
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
@@ -151,19 +152,19 @@ class RegisterScreen extends GetView<RegisterController> {
                     ],
                   )),
               SizedBox(
-                height: 3.h,
+                height: 12.h,
               ),
               CustomButtonWithBorder(
                   onTap: () {},
                   child: Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 5.w),
+                        padding: EdgeInsets.only(left: 12.w),
                         child: Image(
                           image: const AssetImage(AppImages.googleImg),
                           fit: BoxFit.fill,
-                          height: 3.h,
-                          width: 6.5.w,
+                          height: 24.h,
+                          width: 24.w,
                         ),
                       ),
                       Expanded(
@@ -172,7 +173,7 @@ class RegisterScreen extends GetView<RegisterController> {
                           AppText.continueWithGoogle,
                           style: TextStyle(
                               color: AppColor.blackColor,
-                              fontSize: 15.dp,
+                              fontSize: 15.sp,
                               fontWeight: FontWeight.w600),
                         ),
                       ),

@@ -7,21 +7,21 @@ class ProfileScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 4.w),
+        padding: EdgeInsets.symmetric(horizontal: 15.w),
         child: Column(children: [
-          SizedBox(height: 5.h),
+          SizedBox(height: 50.h),
           Row(
             children: [
               Text(
                 AppText.profile,
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.dp),
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20.sp),
               ),
               const Spacer(),
               Image(
                 image: const AssetImage(AppImages.settingImg),
-                width: 4.5.w,
+                width: 24.w,
                 color: AppColor.blackColor,
-                height: 2.5.h,
+                height: 24.h,
                 fit: BoxFit.fill,
               ),
               SizedBox(
@@ -29,26 +29,25 @@ class ProfileScreen extends GetView<HomeController> {
               ),
             ],
           ),
-          SizedBox(height: 1.h),
+          SizedBox(height: 24.h),
           Container(
-              height: 10.h,
-              width: 20.w,
+              height: 80.h,
+              width: 80.w,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                    image: AssetImage(
-                        'assets/images/Mask group.png'),
+                    image: AssetImage('assets/images/Mask group.png'),
                     fit: BoxFit.fill),
               )),
           SizedBox(
-            height: 1.h,
+            height: 12.h,
           ),
           Text(
             'Laura Henry',
-            style: TextStyle(fontSize: 20.dp, fontWeight: FontWeight.w600),
+            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
           ),
           SizedBox(
-            height: 1.h,
+            height: 8.h,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -56,7 +55,7 @@ class ProfileScreen extends GetView<HomeController> {
               Text(
                 '@laura_henry123',
                 style: TextStyle(
-                    fontSize: 15.dp,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.w400,
                     color: AppColor.blackColor),
               ),
@@ -74,14 +73,14 @@ class ProfileScreen extends GetView<HomeController> {
               Text(
                 'Miami, FL',
                 style: TextStyle(
-                    fontSize: 15.dp,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.w400,
                     color: AppColor.greyColor),
               ),
             ],
           ),
           SizedBox(
-            height: 2.h,
+            height: 24.h,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -92,7 +91,7 @@ class ProfileScreen extends GetView<HomeController> {
                     AppText.followers,
                     style: TextStyle(
                         color: AppColor.greyColor,
-                        fontSize: 15.dp,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w400),
                   ),
                   SizedBox(
@@ -102,17 +101,17 @@ class ProfileScreen extends GetView<HomeController> {
                     '36',
                     style: TextStyle(
                         color: AppColor.blackColor,
-                        fontSize: 15.dp,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w600),
                   ),
                 ],
               ),
               SizedBox(
-                height: 7.h,
+                height: 50.h,
                 child: VerticalDivider(
                   color: AppColor.greyColor,
                   thickness: 1,
-                  width: 3.w,
+                  width: 30.w,
                   indent: 8,
                   endIndent: 8,
                 ),
@@ -123,7 +122,7 @@ class ProfileScreen extends GetView<HomeController> {
                     AppText.following,
                     style: TextStyle(
                         color: AppColor.greyColor,
-                        fontSize: 15.dp,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w400),
                   ),
                   SizedBox(
@@ -133,7 +132,7 @@ class ProfileScreen extends GetView<HomeController> {
                     '54',
                     style: TextStyle(
                         color: AppColor.blackColor,
-                        fontSize: 15.dp,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w600),
                   ),
                 ],
@@ -141,10 +140,11 @@ class ProfileScreen extends GetView<HomeController> {
             ],
           ),
           SizedBox(
-            height: 2.h,
+            height: 18.h,
           ),
           Obx(
             () => Container(
+              height: 80.h,
               decoration: BoxDecoration(
                   color: AppColor.greyColor.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(20)),
@@ -154,7 +154,7 @@ class ProfileScreen extends GetView<HomeController> {
                   InkWell(
                     onTap: () => _onTabTapped(0),
                     child: Container(
-                      width: 45.w,
+                      width: 176.w,
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           color: controller.selectIndex.value == 0
@@ -176,7 +176,7 @@ class ProfileScreen extends GetView<HomeController> {
                   InkWell(
                     onTap: () => _onTabTapped(1),
                     child: Container(
-                      width: 45.w,
+                      width: 176.w,
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           color: controller.selectIndex.value == 1
@@ -199,14 +199,14 @@ class ProfileScreen extends GetView<HomeController> {
             ),
           ),
           SizedBox(
-            height: 2.h,
+            height: 20.h,
           ),
           CustomRoundShapeTextField(
-              leadingIcon: Icon(Icons.search, size: 20.dp),
+              leadingIcon: Icon(Icons.search, size: 20.sp),
               controller: controller.searchController,
               hintText: AppText.search),
           SizedBox(
-            height: 2.h,
+            height: 12.h,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -215,7 +215,7 @@ class ProfileScreen extends GetView<HomeController> {
                 '243 events',
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    fontSize: 15.dp,
+                    fontSize: 15.sp,
                     color: AppColor.blackColor),
               ),
               Row(
@@ -223,7 +223,7 @@ class ProfileScreen extends GetView<HomeController> {
                   Text(AppText.sortBy,
                       style: TextStyle(
                           color: AppColor.blackColor,
-                          fontSize: 13.dp,
+                          fontSize: 13.sp,
                           fontWeight: FontWeight.w400)),
                   SizedBox(
                     width: 1.w,
@@ -256,7 +256,7 @@ class ProfileScreen extends GetView<HomeController> {
                           child: Text(value,
                               style: TextStyle(
                                   color: AppColor.blackColor,
-                                  fontSize: 13.dp,
+                                  fontSize: 13.sp,
                                   fontWeight: FontWeight.w400)),
                         );
                       }).toList(),
@@ -270,7 +270,7 @@ class ProfileScreen extends GetView<HomeController> {
             () => controller.selectIndex.value == 0
                 ? Expanded(
                     child: ListView.separated(
-                        padding: EdgeInsets.symmetric(vertical: 1.h),
+                        padding: EdgeInsets.symmetric(vertical: 12.h),
                         itemBuilder: (context, index) {
                           return CustomProductContainer(
                             friendsInterested: '3 friends interested',
@@ -287,11 +287,13 @@ class ProfileScreen extends GetView<HomeController> {
                             productPrice: r'$50',
                             onTapContainer: () {},
                             onTapChat: () {},
+                            onTapNotification: () {},
+                            onTapShare: () {},
                           );
                         },
                         separatorBuilder: (context, index) {
                           return SizedBox(
-                            height: 1.h,
+                            height: 12.h,
                           );
                         },
                         itemCount: 2),
@@ -315,6 +317,8 @@ class ProfileScreen extends GetView<HomeController> {
                             productPrice: r'$50',
                             onTapContainer: () {},
                             onTapChat: () {},
+                            onTapNotification: () {},
+                            onTapShare: () {},
                           );
                         },
                         separatorBuilder: (context, index) {

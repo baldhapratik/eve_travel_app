@@ -1,6 +1,4 @@
-import 'package:eve_travel_app/utils/app_color.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:eve_travel_app/app_imports/app_imports.dart';
 
 class CustomRoundShapeTextField extends StatelessWidget {
   const CustomRoundShapeTextField({
@@ -25,8 +23,9 @@ class CustomRoundShapeTextField extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: AppColor.greyColor.withOpacity(
-            0.5)), // Change this to your desired border color
+        border: Border.all(
+            color: AppColor.greyColor
+                .withOpacity(0.5)),
       ),
       child: TextFormField(
         textAlignVertical: TextAlignVertical.center,
@@ -35,9 +34,11 @@ class CustomRoundShapeTextField extends StatelessWidget {
         validator: validator,
         onChanged: onChange,
         decoration: InputDecoration(
+          constraints:
+          maxLength != null ? null : BoxConstraints(maxHeight: 60.h),
           isDense: true,
-          contentPadding: EdgeInsets.symmetric(
-              horizontal: 20, vertical: 0.5.h),
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
           hintText: hintText ?? '',
           hintStyle: const TextStyle(
             color: AppColor.greyColor,

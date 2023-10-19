@@ -8,43 +8,43 @@ class HomeScreen extends GetView<HomeController> {
     Get.put(HomeController());
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 4.w),
+        padding: EdgeInsets.symmetric(horizontal: 15.w),
         child: Column(
           children: [
-            SizedBox(height: 5.h),
+            SizedBox(height: 50.h),
             Row(
               children: [
                 Text(
                   AppText.myEvents,
                   style:
-                      TextStyle(fontWeight: FontWeight.w600, fontSize: 20.dp),
+                      TextStyle(fontWeight: FontWeight.w600, fontSize: 20.sp),
                 ),
                 const Spacer(),
                 Image(
                   image: const AssetImage(AppImages.notificationImg),
-                  width: 4.5.w,
+                  width: 20.w,
+                  height: 20.h,
                   color: AppColor.blackColor,
-                  height: 2.5.h,
                   fit: BoxFit.fill,
                 ),
                 SizedBox(
-                  width: 3.w,
+                  width: 20.w,
                 ),
                 Image(
                   image: const AssetImage(AppImages.userAddImg),
                   color: AppColor.blackColor,
-                  width: 4.5.w,
-                  height: 2.h,
+                  width: 20.w,
+                  height: 20.h,
                   fit: BoxFit.fill,
                 ),
               ],
             ),
-            SizedBox(height: 2.h),
+            SizedBox(height: 12.h),
             CustomRoundShapeTextField(
-                leadingIcon: Icon(Icons.search, size: 20.dp),
+                leadingIcon: Icon(Icons.search, size: 20.sp),
                 controller: controller.searchController,
                 hintText: AppText.search),
-            SizedBox(height: 2.h),
+            SizedBox(height: 8.h),
             Row(
               children: [
                 InkWell(
@@ -52,8 +52,8 @@ class HomeScreen extends GetView<HomeController> {
                     Get.toNamed(AppRoutes.filterScreen);
                   },
                   child: Container(
-                    height: 5.h,
-                    width: 25.w,
+                    height: 33.h,
+                    width: 114.w,
                     decoration: BoxDecoration(
                         color: AppColor.darkBlueColor,
                         borderRadius: BorderRadius.circular(10)),
@@ -62,7 +62,8 @@ class HomeScreen extends GetView<HomeController> {
                       children: [
                         Image(
                             image: const AssetImage(AppImages.filterImg),
-                            height: 2.h),
+                            height: 18.h,
+                            width: 18.w),
                         const Center(
                           child: Text(
                             "Filters",
@@ -78,11 +79,11 @@ class HomeScreen extends GetView<HomeController> {
                   ),
                 ),
                 SizedBox(
-                  width: 1.w,
+                  width: 8.w,
                 ),
                 Expanded(
                     child: SizedBox(
-                  height: 5.h,
+                  height: 33.h,
                   child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
@@ -96,8 +97,8 @@ class HomeScreen extends GetView<HomeController> {
                           },
                           child: Obx(
                             () => Container(
-                                height: 5.h,
-                                width: 25.w,
+                                height: 33.h,
+                                width: 95.w,
                                 decoration: BoxDecoration(
                                     color: controller.selectIndex.value == index
                                         ? AppColor.darkBlueColor
@@ -117,7 +118,7 @@ class HomeScreen extends GetView<HomeController> {
                       },
                       separatorBuilder: (context, index) {
                         return SizedBox(
-                          width: 2.w,
+                          width: 8.w,
                         );
                       },
                       itemCount: controller.filterList.length),
@@ -132,7 +133,7 @@ class HomeScreen extends GetView<HomeController> {
                   '243 events',
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      fontSize: 15.dp,
+                      fontSize: 15.sp,
                       color: AppColor.blackColor),
                 ),
                 Row(
@@ -140,7 +141,7 @@ class HomeScreen extends GetView<HomeController> {
                     Text(AppText.sortBy,
                         style: TextStyle(
                             color: AppColor.blackColor,
-                            fontSize: 13.dp,
+                            fontSize: 13.sp,
                             fontWeight: FontWeight.w400)),
                     SizedBox(
                       width: 1.w,
@@ -173,7 +174,7 @@ class HomeScreen extends GetView<HomeController> {
                             child: Text(value,
                                 style: TextStyle(
                                     color: AppColor.blackColor,
-                                    fontSize: 13.dp,
+                                    fontSize: 13.sp,
                                     fontWeight: FontWeight.w400)),
                           );
                         }).toList(),
@@ -183,10 +184,9 @@ class HomeScreen extends GetView<HomeController> {
                 ),
               ],
             ),
-            SizedBox(height: 1.h),
             Expanded(
               child: ListView.separated(
-                  padding: EdgeInsets.symmetric(vertical: 1.h),
+                  padding: EdgeInsets.symmetric(vertical: 12.h),
                   itemBuilder: (context, index) {
                     return CustomProductContainer(
                       friendsInterested: '3 friends interested',
@@ -201,15 +201,11 @@ class HomeScreen extends GetView<HomeController> {
                           'MIAMI Halloween Party Cruise - Pier Pressure BlackPearlYacht',
                       location: 'Paperfish, Brickell, Miami, FL',
                       productPrice: r'$50',
-                      onTapContainer: () {
-                        print('onTapContainer');
-                      },
-                      onTapChat: () {
-                        print('onTapChat');
-                      },
+                      onTapContainer: () {},
+                      onTapChat: () {}, onTapNotification: () {  }, onTapShare: () {  },
                     );
                   },
-                  separatorBuilder: (context, index) => SizedBox(height: 3.h),
+                  separatorBuilder: (context, index) => SizedBox(height: 12.h),
                   itemCount: 10),
             )
           ],

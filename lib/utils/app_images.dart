@@ -14,5 +14,6 @@ class AppImages {
   static const backArrowImg = 'assets/images/backArrow.png';
   static const settingImg = 'assets/images/setting.png';
   static const sendImg = 'assets/images/send.png';
+  static const shareImg = 'assets/images/share.png';
 }
 
