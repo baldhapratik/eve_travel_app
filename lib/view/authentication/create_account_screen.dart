@@ -77,18 +77,30 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                 SizedBox(
                   height: 20.h,
                 ),
-                CustomTextField(
-                  onChange: (p0) {
-                    controller.validateLoginField();
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return AppText.pleaseEnterAPassword;
-                    }
-                    return null;
-                  },
-                  controller: controller.passwordController,
-                  hintText: AppText.password,
+                Obx(
+                  () => CustomTextField(
+                    obscureText: controller.showPassword.value,
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        controller.showPassword.value =
+                            !controller.showPassword.value;
+                      },
+                      child: controller.showPassword.value
+                          ? const Icon(Icons.visibility_off)
+                          : const Icon(Icons.visibility),
+                    ),
+                    onChange: (p0) {
+                      controller.validateLoginField();
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppText.pleaseEnterAPassword;
+                      }
+                      return null;
+                    },
+                    controller: controller.passwordController,
+                    hintText: AppText.password,
+                  ),
                 ),
                 SizedBox(
                   height: 20.h,
@@ -166,7 +178,7 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                         onTap: () {
                           FocusScope.of(context).unfocus();
                           if (controller.formKey.currentState!.validate()) {
-                            Get.offAllNamed(AppRoutes.mainScreen);
+                            controller.signUpApiCall(context);
                           }
                         },
                         labelColor: controller.validate.value

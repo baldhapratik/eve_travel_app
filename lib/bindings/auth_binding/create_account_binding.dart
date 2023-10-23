@@ -1,5 +1,4 @@
-import 'package:eve_travel_app/controller/auth_controller/create_account_controller.dart';
-import 'package:get/get.dart';
+import 'package:eve_travel_app/app_imports/app_imports.dart';
 
 class CreateAccountBinding extends Bindings {
   @override

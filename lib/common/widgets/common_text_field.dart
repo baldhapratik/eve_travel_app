@@ -9,6 +9,8 @@ class CustomTextField extends StatelessWidget {
     this.onChange,
     this.maxLength,
     this.leadingIcon,
+    this.suffixIcon,
+    this.obscureText,
   });
 
   final String? hintText;
@@ -16,7 +18,9 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final int? maxLength;
   final IconData? leadingIcon;
+  final Widget? suffixIcon;
   final Function(String?)? onChange;
+  final bool? obscureText;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +28,7 @@ class CustomTextField extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         TextFormField(
+          obscureText: obscureText != null ? obscureText! : false,
           textAlignVertical: TextAlignVertical.center,
           maxLines: maxLength ?? 1,
           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -33,7 +38,7 @@ class CustomTextField extends StatelessWidget {
             constraints:
                 maxLength != null ? null : BoxConstraints(maxHeight: 60.h),
             contentPadding:
-                 EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
             hintText: hintText ?? '',
             hintStyle: const TextStyle(
                 color: AppColor.greyColor, fontWeight: FontWeight.w400),
@@ -49,6 +54,7 @@ class CustomTextField extends StatelessWidget {
             ),
             counterText: '',
             prefixIcon: leadingIcon != null ? Icon(leadingIcon) : null,
+            suffixIcon: suffixIcon,
           ),
           controller: controller,
         ),

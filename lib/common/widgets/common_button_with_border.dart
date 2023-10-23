@@ -1,13 +1,12 @@
 import 'package:eve_travel_app/app_imports/app_imports.dart';
 
 class CustomButtonWithBorder extends StatelessWidget {
-  const CustomButtonWithBorder({
-    super.key,
-    required this.onTap,
-    required this.child,
-  });
+  const CustomButtonWithBorder(
+      {super.key, required this.onTap, required this.child, this.borderColor});
+
   final void Function() onTap;
   final Widget child;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class CustomButtonWithBorder extends StatelessWidget {
         height: 44.h,
         decoration: BoxDecoration(
           border: Border.all(
-            color: AppColor.primaryColor,
+            color: borderColor ?? AppColor.primaryColor,
           ),
           borderRadius: BorderRadius.circular(10),
         ),

@@ -1,4 +1,5 @@
 import 'package:eve_travel_app/app_imports/app_imports.dart';
+import 'package:eve_travel_app/common/widgets/common_event_details_screen.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
@@ -148,7 +149,7 @@ class HomeScreen extends GetView<HomeController> {
                     ),
                     Obx(
                       () => DropdownButton<String>(
-                        hint: const Text('Sort by'),
+                        hint: const Text(AppText.sortBy),
                         value: controller.dropdownValue.value,
                         icon: const Icon(Icons.arrow_drop_down_sharp),
                         iconSize: 24,
@@ -201,8 +202,12 @@ class HomeScreen extends GetView<HomeController> {
                           'MIAMI Halloween Party Cruise - Pier Pressure BlackPearlYacht',
                       location: 'Paperfish, Brickell, Miami, FL',
                       productPrice: r'$50',
-                      onTapContainer: () {},
-                      onTapChat: () {}, onTapNotification: () {  }, onTapShare: () {  },
+                      onTapContainer: () {
+                        Get.to(CustomEventDetailsScreen());
+                      },
+                      onTapChat: () {},
+                      onTapNotification: () {},
+                      onTapShare: () {},
                     );
                   },
                   separatorBuilder: (context, index) => SizedBox(height: 12.h),

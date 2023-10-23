@@ -10,7 +10,7 @@ class ChatScreen extends GetView<ChatScreenController> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColor.primaryColor,
-        leading: CustomBackButton(
+        leading: CustomBackButton(color: AppColor.whiteColor,
           onTap: () {
             Get.back();
           },

@@ -1,4 +1,8 @@
 import 'package:eve_travel_app/app_imports/app_imports.dart';
+import 'package:eve_travel_app/bindings/auth_binding/forget_password_binding.dart';
+import 'package:eve_travel_app/view/authentication/forget_password.dart';
+import 'package:eve_travel_app/view/splash_screen/splash_screen.dart';
+
 class AppPages {
   static final pages = [
     GetPage(
@@ -50,6 +54,24 @@ class AppPages {
       name: AppRoutes.chatScreen,
       page: () => const ChatScreen(),
       binding: ChatScreenBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.attendanceScreen,
+      page: () => const AttendanceScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.otpScreen,
+      page: () => OtpScreen(),
+      binding: OtpBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.forgetPasswordScreen,
+      page: () => const ForgetPasswordScreen(),
+      binding: ForgetPasswordBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.splashScreen,
+      page: () => const SplashScreen(),
     ),
   ];
 }

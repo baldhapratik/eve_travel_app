@@ -124,7 +124,6 @@ class RegisterScreen extends GetView<RegisterController> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left: 12.w),
-
                         child: Image(
                           image: const AssetImage(AppImages.facebookImg),
                           fit: BoxFit.fill,
@@ -155,7 +154,9 @@ class RegisterScreen extends GetView<RegisterController> {
                 height: 12.h,
               ),
               CustomButtonWithBorder(
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(AppRoutes.mainScreen);
+                  },
                   child: Row(
                     children: [
                       Padding(

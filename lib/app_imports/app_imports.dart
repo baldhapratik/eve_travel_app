@@ -3,6 +3,7 @@ export 'package:eve_travel_app/utils/app_string.dart';
 export 'package:flutter/material.dart';
 export 'package:get/get.dart' hide ScreenType;
 export 'package:eve_travel_app/routes/app_routes.dart';
+export 'package:eve_travel_app/bindings/auth_binding/otp_binding.dart';
 export 'package:eve_travel_app/utils/app_images.dart';
 export 'package:eve_travel_app/bindings/auth_binding/create_account_binding.dart';
 export 'package:eve_travel_app/bindings/auth_binding/login_binding.dart';
@@ -24,7 +25,7 @@ export 'package:eve_travel_app/view/event_flow/massage_flow/massage_screen.dart'
 export 'package:eve_travel_app/view/event_flow/massage_flow/chat_screen.dart';
 export 'package:eve_travel_app/view/event_flow/profile_flow/profile_screen.dart';
 export 'package:eve_travel_app/common/widgets/common_product_container.dart';
-export 'package:eve_travel_app/common/widgets/common_round_shape_textField.dart';
+export 'package:eve_travel_app/common/widgets/common_round_shape_text_field.dart';
 export 'package:eve_travel_app/common/widgets/common_back_button.dart';
 export 'package:eve_travel_app/common/widgets/common_small_button.dart';
 export 'package:eve_travel_app/common/widgets/common_text_field.dart';
@@ -43,3 +44,17 @@ export 'package:eve_travel_app/controller/global_controller/global_controller.da
 export 'package:eve_travel_app/model/chat_model.dart';
 export 'package:eve_travel_app/routes/app_pages.dart';
 export 'package:flutter_screenutil/flutter_screenutil.dart';
+export 'package:eve_travel_app/common/widgets/dash_border_container.dart';
+export 'package:eve_travel_app/controller/auth_controller/otp_controller.dart';
+export 'package:eve_travel_app/view/event_flow/create_event_screen_flow/attendance_screen.dart';
+export 'package:eve_travel_app/view/authentication/otp_screen.dart';
+export 'package:pinput/pinput.dart';
+export 'package:fluttertoast/fluttertoast.dart';
+export 'package:eve_travel_app/api/urls.dart';
+export 'package:get_storage/get_storage.dart';
+export 'package:eve_travel_app/main.dart';
+export 'package:eve_travel_app/controller/auth_controller/forget_password_controller.dart';
+
+
+
+

@@ -1,7 +1,9 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:eve_travel_app/app_imports/app_imports.dart';
 
-void main() {
+GetStorage getStorage = GetStorage();
+
+Future<void> main() async {
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -22,7 +24,10 @@ class MyApp extends StatelessWidget {
           ),
           debugShowCheckedModeBanner: false,
           getPages: AppPages.pages,
-          initialRoute: AppRoutes.registerScreen,
+          initialRoute: getStorage.read('isLogin') != null &&
+                  getStorage.read('isLogin') == 'true'
+              ? AppRoutes.mainScreen
+              : AppRoutes.registerScreen,
         );
       },
     );

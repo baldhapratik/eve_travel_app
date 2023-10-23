@@ -63,18 +63,30 @@ class LoginScreen extends GetView<LoginController> {
                 SizedBox(
                   height: 2.h,
                 ),
-                CustomTextField(
-                  onChange: (p0) {
-                    controller.validateLoginField();
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return AppText.pleaseEnterAPassword;
-                    }
-                    return null;
-                  },
-                  controller: controller.passwordController,
-                  hintText: AppText.password,
+                Obx(
+                  () => CustomTextField(
+                    obscureText: controller.showPassword.value,
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        controller.showPassword.value =
+                            !controller.showPassword.value;
+                      },
+                      child: controller.showPassword.value
+                          ? const Icon(Icons.visibility_off)
+                          : const Icon(Icons.visibility),
+                    ),
+                    onChange: (p0) {
+                      controller.validateLoginField();
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppText.pleaseEnterAPassword;
+                      }
+                      return null;
+                    },
+                    controller: controller.passwordController,
+                    hintText: AppText.password,
+                  ),
                 ),
                 SizedBox(
                   height: 12.h,
@@ -125,12 +137,17 @@ class LoginScreen extends GetView<LoginController> {
                           color: AppColor.greyColor),
                     ),
                     const Spacer(),
-                    Text(
-                      AppText.forgotPassword,
-                      style: TextStyle(
-                          fontSize: 15.sp,
-                          color: AppColor.primaryColor,
-                          fontWeight: FontWeight.w600),
+                    InkWell(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.forgetPasswordScreen);
+                      },
+                      child: Text(
+                        AppText.forgotPassword,
+                        style: TextStyle(
+                            fontSize: 15.sp,
+                            color: AppColor.primaryColor,
+                            fontWeight: FontWeight.w600),
+                      ),
                     ),
                     SizedBox(
                       width: 2.w,
@@ -147,7 +164,7 @@ class LoginScreen extends GetView<LoginController> {
                         onTap: () {
                           FocusScope.of(context).unfocus();
                           if (controller.formKey.currentState!.validate()) {
-                            Get.offAllNamed(AppRoutes.mainScreen);
+                            controller.loginApiCall(context);
                           }
                         },
                         labelColor: controller.validate.value

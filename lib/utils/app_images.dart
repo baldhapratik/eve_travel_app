@@ -15,5 +15,16 @@ class AppImages {
   static const settingImg = 'assets/images/setting.png';
   static const sendImg = 'assets/images/send.png';
   static const shareImg = 'assets/images/share.png';
+  static const cameraImg = 'assets/images/camera.png';
+  static const clockImg = 'assets/images/clock.png';
+  static const bowtieImg = 'assets/images/bow-tie.png';
+  static const userImg = 'assets/images/users.png';
+  static const locationImg = 'assets/images/map-pin.png';
+  static const starImg = 'assets/images/star.png';
+  static const dollarImg = 'assets/images/dollar-sign.png';
+  static const calenderClockImg = 'assets/images/calendar-clock.png';
+  static const joinGroupImg = 'assets/images/join-group.png';
+  static const mapImg = 'assets/images/paper-plane-top.png';
+  static const calenderImg = 'assets/images/calendar-plus.png';
+  static const sortImg = 'assets/images/sort.png';
 }
-

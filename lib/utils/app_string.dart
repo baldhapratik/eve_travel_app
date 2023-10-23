@@ -45,4 +45,17 @@ class AppText {
   static const eventsHistory = 'Events history';
   static const sortBy = 'Sort By:';
   static const chats = 'chats';
+  static const newEvent = 'New Event';
+  static const save = 'Save';
+  static const uploadScreenshot = 'Upload screenshot';
+  static const title = 'Title';
+  static const description = 'Description';
+  static const allDay = 'All day';
+  static const event = 'Event';
+  static const attend = '+ Attend';
+  static const no = 'No';
+  static const maybe = 'Maybe';
+  static const enterOtp = 'Enter OTP';
+  static const submit = 'Submit';
+  static const forgetPassword = 'ForgetPassword';
 }
