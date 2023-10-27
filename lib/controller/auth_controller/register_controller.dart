@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+import 'package:eve_travel_app/app_imports/app_imports.dart';
 
 class RegisterController extends GetxController{
 

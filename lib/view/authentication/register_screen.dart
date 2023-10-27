@@ -85,7 +85,7 @@ class RegisterScreen extends GetView<RegisterController> {
               SizedBox(
                 height: 32.h,
               ),
-              CustomButtonWithBorder(
+              CustomButtonWithBorder(borderColor: AppColor.greyColor,
                   onTap: () {},
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -117,7 +117,7 @@ class RegisterScreen extends GetView<RegisterController> {
               SizedBox(
                 height: 12.h,
               ),
-              CustomButtonWithBorder(
+              CustomButtonWithBorder(borderColor: AppColor.greyColor,
                   onTap: () {},
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -153,7 +153,7 @@ class RegisterScreen extends GetView<RegisterController> {
               SizedBox(
                 height: 12.h,
               ),
-              CustomButtonWithBorder(
+              CustomButtonWithBorder(borderColor: AppColor.greyColor,
                   onTap: () {
                     Get.toNamed(AppRoutes.mainScreen);
                   },

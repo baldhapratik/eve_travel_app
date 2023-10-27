@@ -1,17 +1,13 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
-import 'package:eve_travel_app/api/urls.dart';
-import 'package:eve_travel_app/common/widgets/common_toast.dart';
-import 'package:eve_travel_app/model/forget_password_model.dart';
-import 'package:eve_travel_app/model/get_event_model.dart';
-import 'package:eve_travel_app/model/otp_model.dart';
-import 'package:eve_travel_app/model/sign_up_model.dart';
-import 'package:eve_travel_app/network_dio/network_dio.dart';
-import 'package:eve_travel_app/utils/process_indicator.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import '../../model/login_model.dart';
+import 'package:eve_travel_app/app_imports/app_imports.dart';
+import 'package:eve_travel_app/model/add_event_model.dart';
+import 'package:eve_travel_app/model/add_room_model.dart';
+import 'package:eve_travel_app/model/get_profile_event_model.dart';
+import 'package:eve_travel_app/model/get_room_model.dart';
+import 'package:eve_travel_app/model/image_upload_model.dart';
+import 'package:eve_travel_app/model/resend_otp.dart';
+import 'package:eve_travel_app/model/reset_password_model.dart';
 
 NetworkRepository networkRepository = NetworkRepository();
 
@@ -41,7 +37,27 @@ class NetworkRepository {
       return checkResponse(
           authUserResponse, LoginModel.fromJson(authUserResponse['body']));
     } catch (e) {
-      customToast(e.toString());
+      // customToast(e.toString());
+      customSnackBar('Error', AppColor.redColor, e.toString());
+      circle.hide(context);
+      // CommonMethod().getXSnackBar("Error", e.toString(), red);
+    }
+  }
+
+  resendOtpApi(context, authUserData) async {
+    try {
+      final authUserResponse = await NetworkDioHttp.postDioHttpMethod(
+        context: context,
+        url: Urls.baseUrl + Urls.resendOtp,
+        data: authUserData,
+      );
+      log('Login Response : $authUserResponse');
+      return checkResponse(
+          authUserResponse, OtpSendModel.fromJson(authUserResponse['body']));
+    } catch (e) {
+      // customToast(e.toString());
+      customSnackBar('Error', AppColor.redColor, e.toString());
+
       circle.hide(context);
       // CommonMethod().getXSnackBar("Error", e.toString(), red);
     }
@@ -60,17 +76,32 @@ class NetworkRepository {
           authUserResponse, SignUpModel.fromJson(authUserResponse['body']));
     } catch (e) {
       log(e.toString());
-      customToast(e.toString());
       // CommonMethod().getXSnackBar("Error", e.toString(), red);
     }
   }
 
   //send OTP to user emailAddress
-  reSendOTP(context, authUserData) async {
+  otpVerification(context, authUserData) async {
     try {
       final authUserResponse = await NetworkDioHttp.postDioHttpMethod(
         context: context,
         url: Urls.baseUrl + Urls.otpVerification,
+        data: authUserData,
+      );
+      log('OTP Response : $authUserResponse');
+      return checkResponse(
+          authUserResponse, OtpModel.fromJson(authUserResponse['body']));
+    } catch (e, st) {
+      log(st.toString());
+      // CommonMethod().getXSnackBar("Error", e.toString(), red);
+    }
+  }
+
+  resendOtp(context, authUserData) async {
+    try {
+      final authUserResponse = await NetworkDioHttp.postDioHttpMethod(
+        context: context,
+        url: Urls.baseUrl + Urls.resendOtp,
         data: authUserData,
       );
       log('OTP Response : $authUserResponse');
@@ -98,10 +129,29 @@ class NetworkRepository {
     }
   }
 
-  getEvent(eventData) async {
+  resetPassword(context, authUserData) async {
+    try {
+      final authUserResponse = await NetworkDioHttp.postDioHttpMethod(
+        context: context,
+        url: Urls.baseUrl + Urls.resetPassword,
+        data: authUserData,
+      );
+      log('OTP Response : $authUserResponse');
+      return checkResponse(authUserResponse,
+          ResetPasswordModel.fromJson(authUserResponse['body']));
+    } catch (e, st) {
+      log(st.toString());
+      // CommonMethod().getXSnackBar("Error", e.toString(), red);
+    }
+  }
+
+  getEvent({eventData}) async {
     try {
       final eventDataResponse = await NetworkDioHttp.postDioHttpMethod(
-        url: Urls.baseUrl + Urls.otpVerification,
+        url: Urls.baseUrl + Urls.homeEvent,
+        // header: Options(
+        //   headers: {'Content-Type': 'application/json', 'authorization': token},
+        // ),
         data: eventData,
       );
       log('eventData Response : $eventDataResponse');
@@ -109,6 +159,180 @@ class NetworkRepository {
           eventDataResponse, GetEventModel.fromJson(eventDataResponse['body']));
     } catch (e, st) {
       log(st.toString());
+      // CommonMethod().getXSnackBar("Error", e.toString(), red);
+    }
+  }
+
+  getProfileData() async {
+    try {
+      final profileDataResponse = await NetworkDioHttp.getDioHttpMethod(
+        url: Urls.baseUrl + Urls.profile,
+        // header: Options(
+        //   headers: {'Content-Type': 'application/json', 'authorization': token},
+        // ),
+      );
+      log('eventData Response : $profileDataResponse');
+      return checkResponse(profileDataResponse,
+          ProfileModel.fromJson(profileDataResponse['body']));
+    } catch (e, st) {
+      log(st.toString());
+      log(e.toString());
+      // CommonMethod().getXSnackBar("Error", e.toString(), red);
+    }
+  }
+
+  getUserEvent({required String token}) async {
+    try {
+      final profileDataResponse = await NetworkDioHttp.postDioHttpMethod(
+        url: Urls.baseUrl + Urls.userEvent,
+        // header: Options(
+        //   headers: {'Content-Type': 'application/json', 'authorization': token},
+        // ),
+        data: {},
+      );
+      log('eventData Response : $profileDataResponse');
+      return checkResponse(profileDataResponse,
+          GetProfileEventModel.fromJson(profileDataResponse['body']));
+    } catch (e, st) {
+      log(st.toString());
+      log(e.toString());
+      // CommonMethod().getXSnackBar("Error", e.toString(), red);
+    }
+  }
+
+  getUserEventHistory({required String token}) async {
+    try {
+      final profileDataResponse = await NetworkDioHttp.postDioHttpMethod(
+        url: Urls.baseUrl + Urls.eventHistory,
+        // header: Options(
+        //   headers: {'Content-Type': 'application/json', 'authorization': token},
+        // ),
+        data: {},
+      );
+      log('eventData Response : $profileDataResponse');
+      return checkResponse(profileDataResponse,
+          GetProfileEventModel.fromJson(profileDataResponse['body']));
+    } catch (e, st) {
+      log(st.toString());
+      log(e.toString());
+      // CommonMethod().getXSnackBar("Error", e.toString(), red);
+    }
+  }
+
+  getUserFollowers() async {
+    try {
+      final profileDataResponse = await NetworkDioHttp.postDioHttpMethod(
+        url: Urls.baseUrl + Urls.followers,
+        // header: Options(
+        //   headers: {'Content-Type': 'application/json', 'authorization': token},
+        // ),
+        data: {},
+      );
+      log('eventData Response : $profileDataResponse');
+      return checkResponse(profileDataResponse,
+          FollowersModel.fromJson(profileDataResponse['body']));
+    } catch (e, st) {
+      log(st.toString());
+      log(e.toString());
+      // CommonMethod().getXSnackBar("Error", e.toString(), red);
+    }
+  }
+
+  getUserFollowing({required String token}) async {
+    try {
+      final profileDataResponse = await NetworkDioHttp.postDioHttpMethod(
+        url: Urls.baseUrl + Urls.following,
+        // header: Options(
+        //   headers: {'Content-Type': 'application/json', 'authorization': token},
+        // ),
+        data: {},
+      );
+      log('eventData Response : $profileDataResponse');
+      return checkResponse(profileDataResponse,
+          FollowingModel.fromJson(profileDataResponse['body']));
+    } catch (e, st) {
+      log(st.toString());
+      log(e.toString());
+      // CommonMethod().getXSnackBar("Error", e.toString(), red);
+    }
+  }
+
+  uploadImage({required String path}) async {
+    try {
+      final profileDataResponse = await NetworkDioHttp.uploadImage(
+        url: Urls.baseUrl + Urls.uploadImage,
+        path: path,
+      );
+      // log('eventData Response : $profileDataResponse');
+      return checkResponse(profileDataResponse,
+          ImageUploadModel.fromJson(profileDataResponse['body']));
+    } catch (e, st) {
+      log(st.toString());
+      log(e.toString());
+      // CommonMethod().getXSnackBar("Error", e.toString(), red);
+    }
+  }
+
+  addEvent({required Map data}) async {
+    try {
+      final profileDataResponse = await NetworkDioHttp.postDioHttpMethod(
+        url: Urls.baseUrl + Urls.addEvent,
+        data: data,
+      );
+      log('eventData Response : $profileDataResponse');
+      return checkResponse(profileDataResponse,
+          EventModel.fromJson(profileDataResponse['body']));
+    } catch (e, st) {
+      log(st.toString());
+      log(e.toString());
+      // CommonMethod().getXSnackBar("Error", e.toString(), red);
+    }
+  }
+
+  addRoom({required Map data}) async {
+    try {
+      final profileDataResponse = await NetworkDioHttp.postDioHttpMethod(
+        url: Urls.baseUrl + Urls.addRoom,
+        data: data,
+      );
+      log('eventData Response : $profileDataResponse');
+      return checkResponse(profileDataResponse,
+          AddRoomModel.fromJson(profileDataResponse['body']));
+    } catch (e, st) {
+      log(st.toString());
+      log(e.toString());
+      // CommonMethod().getXSnackBar("Error", e.toString(), red);
+    }
+  }
+
+  getEventParticipate({required Map data}) async {
+    try {
+      final profileDataResponse = await NetworkDioHttp.postDioHttpMethod(
+        url: Urls.baseUrl + Urls.eventParticipate,
+        data: data,
+      );
+      log('eventData Response : $profileDataResponse');
+      return checkResponse(profileDataResponse,
+          EventModel.fromJson(profileDataResponse['body']));
+    } catch (e, st) {
+      log(st.toString());
+      log(e.toString());
+      // CommonMethod().getXSnackBar("Error", e.toString(), red);
+    }
+  }
+
+  getRoom({required Map data}) async {
+    try {
+      final profileDataResponse = await NetworkDioHttp.postDioHttpMethod(
+        url: Urls.baseUrl + Urls.getRoom,
+        data: data,
+      );
+      log('eventData Response : $profileDataResponse');
+      return checkResponse(profileDataResponse,
+          GetRoomModel.fromJson(profileDataResponse['body']));
+    } catch (e, st) {
+      log(st.toString());
+      log(e.toString());
       // CommonMethod().getXSnackBar("Error", e.toString(), red);
     }
   }
@@ -838,7 +1062,8 @@ class NetworkRepository {
         return modelResponse;
       } else {
         log("--Fail--1");
-        showErrorDialog(message: response['body']['message']);
+        // showErrorDialog(message: response['body']['message']);
+        return modelResponse;
       }
     }
     // else {
@@ -892,6 +1117,7 @@ class NetworkRepository {
   // }
   //
   void showErrorDialog({required String message}) {
-    customToast(message);
+    customSnackBar('Error', AppColor.redColor, message);
+    // customToast(message);
   }
 }

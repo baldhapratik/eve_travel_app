@@ -1,55 +1,9 @@
-import 'dart:async';
-import 'dart:developer';
-
-//
-// import 'package:flutter/material.dart';
 import 'package:eve_travel_app/app_imports/app_imports.dart';
-import 'package:eve_travel_app/common/widgets/common_toast.dart';
-import 'package:eve_travel_app/model/otp_model.dart';
-import 'package:eve_travel_app/repository/network_repository.dart';
-
-//
-// class OtpScreen extends StatefulWidget {
-//   const OtpScreen({Key? key}) : super(key: key);
-//
-//   @override
-//   _OtpScreenState createState() => _OtpScreenState();
-// }
-//
-// class _OtpScreenState extends State<OtpScreen> {
-//   late Timer _timer;
-//   int _start = 30;
-//
-//
-//   void _startTimer() {
-//     const oneSec = Duration(seconds: 1);
-//     _timer = Timer.periodic(oneSec, (timer) {
-//       if (_start == 0) {
-//         setState(() {
-//           _timer.cancel();
-//         });
-//       } else {
-//         setState(() {
-//           _start--;
-//         });
-//       }
-//     });
-//   }
-//
-//   @override
-//   void dispose() {
-//     _timer.cancel();
-//     super.dispose();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ;
-//   }
-// }
 
 class OtpScreen extends GetView<OtpController> {
-  OtpScreen({super.key});
+  OtpScreen({
+    super.key,
+  });
 
   late Timer _timer;
   final RxInt _start = 30.obs;
@@ -67,7 +21,14 @@ class OtpScreen extends GetView<OtpController> {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = Get.arguments as Map<String, dynamic>;
+    bool? verify = arguments['verify'] ?? false;
+    String? email = arguments['email'] ?? '';
+    if (getStorage.read('email') != null) {
+      email = getStorage.read('email');
+    }
     _startTimer();
+
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
@@ -86,7 +47,7 @@ class OtpScreen extends GetView<OtpController> {
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: EdgeInsets.symmetric(horizontal: 15.w),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -94,24 +55,42 @@ class OtpScreen extends GetView<OtpController> {
                 SizedBox(
                   height: 20.h,
                 ),
-                const Text(
+                Text(
                   AppText.enterOtp,
                   style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.blackColor,
-                    fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.blackColor,
+                      fontSize: 20.sp),
+                ),
+                SizedBox(
+                  height: 5.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 3.w),
+                  child: Text(
+                    AppText.pleaseEnterDigitOTPSendToEmail,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.greyColor,
+                        fontSize: 15.sp),
                   ),
                 ),
+                Text(email ?? "",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.greyColor,
+                        fontSize: 15.sp)),
                 SizedBox(
                   height: 32.h,
                 ),
                 Pinput(
                   onChanged: (value) {
-                    controller.pinPutController.length == 4
-                        ? controller.otpSubmit.value = true
-                        : controller.otpSubmit.value = false;
-
-                    print(value);
+                    if (controller.pinPutController.length == 4) {
+                      controller.otpSubmit.value = true;
+                    } else {
+                      controller.otpSubmit.value = false;
+                    }
                   },
                   onSubmitted: (value) {
                     controller.otpSubmit.value = true;
@@ -120,10 +99,10 @@ class OtpScreen extends GetView<OtpController> {
                   controller: controller.pinPutController,
                 ),
                 SizedBox(
-                  height: 10.h,
+                  height: 15.h,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Obx(() => _start.value != 0
                         ? Text(
@@ -134,8 +113,12 @@ class OtpScreen extends GetView<OtpController> {
                             ),
                           )
                         : InkWell(
-                            onTap: () {
-                              customToast('Send Otp Successfully');
+                            onTap: () async {
+                              await controller.resendApiCall(
+                                  context, email ?? '');
+                              _start.value = 30;
+                              _startTimer();
+                              controller.pinPutController.clear();
                             },
                             child: Text(
                               'Resend OTP',
@@ -147,8 +130,8 @@ class OtpScreen extends GetView<OtpController> {
                           )),
                   ],
                 ),
-                const SizedBox(
-                  height: 30,
+                SizedBox(
+                  height: 30.h,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -157,21 +140,24 @@ class OtpScreen extends GetView<OtpController> {
                       onTap: () async {
                         FocusScope.of(context).unfocus();
                         if (controller.otpSubmit.isTrue) {
-                          String email = '';
-                          if (getStorage.read('email') != null) {
-                            email = getStorage.read('email');
-                          }
-
-                          OtpModel response = await networkRepository.reSendOTP(
-                              context, {
+                          OtpModel response = await networkRepository
+                              .otpVerification(context, {
                             "email": email,
                             "otp": controller.pinPutController.text
                           });
                           if (response.status == 200 ||
                               response.status == 201) {
                             getStorage.write('isLogin', 'true');
-                            getStorage.write('token', response.data.id ?? '');
-                            Get.offAllNamed(AppRoutes.mainScreen);
+                            // customToast(response.message);
+                            customSnackBar(AppText.success, AppColor.greenColor,
+                                response.message);
+
+                            if (verify == true) {
+                              Get.offAllNamed(AppRoutes.resetPasswordScreen,
+                                  arguments: {'email': email});
+                            } else {
+                              Get.offAllNamed(AppRoutes.mainScreen);
+                            }
                           }
                         }
                       },

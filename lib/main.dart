@@ -4,6 +4,7 @@ GetStorage getStorage = GetStorage();
 
 Future<void> main() async {
   await GetStorage.init();
+  NetworkDioHttp.setDynamicHeader(endPoint: Urls.baseUrl);
   runApp(const MyApp());
 }
 

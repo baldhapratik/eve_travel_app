@@ -1,5 +1,4 @@
-import 'package:eve_travel_app/controller/event_controller/profile_flow_controller/profile_controller.dart';
-import 'package:get/get.dart';
+import 'package:eve_travel_app/app_imports/app_imports.dart';
 
 class ProfileBinding extends Bindings {
   @override

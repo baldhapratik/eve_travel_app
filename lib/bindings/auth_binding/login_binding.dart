@@ -1,5 +1,4 @@
-import 'package:eve_travel_app/controller/auth_controller/login_controller.dart';
-import 'package:get/get.dart';
+import 'package:eve_travel_app/app_imports/app_imports.dart';
 
 class LoginBinding extends Bindings {
   @override

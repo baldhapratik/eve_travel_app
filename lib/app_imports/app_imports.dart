@@ -54,7 +54,34 @@ export 'package:eve_travel_app/api/urls.dart';
 export 'package:get_storage/get_storage.dart';
 export 'package:eve_travel_app/main.dart';
 export 'package:eve_travel_app/controller/auth_controller/forget_password_controller.dart';
-
-
-
-
+export 'package:get/get.dart';
+export 'package:eve_travel_app/model/sign_up_model.dart' show SignUpModel;
+export 'package:eve_travel_app/model/login_model.dart' show LoginModel;
+export 'package:eve_travel_app/model/forget_password_model.dart'
+    show ForgetPasswordModel;
+export 'package:eve_travel_app/model/get_event_model.dart' show GetEventModel;
+export 'package:eve_travel_app/model/otp_model.dart' show OtpModel;
+export 'package:eve_travel_app/model/profile_model.dart' show ProfileModel;
+export 'package:eve_travel_app/model/following_model.dart' show FollowingModel;
+export 'package:eve_travel_app/model/followers_model.dart' show FollowersModel;
+export 'package:eve_travel_app/repository/network_repository.dart';
+export 'package:eve_travel_app/common/widgets/common_event_details_screen.dart';
+export 'package:eve_travel_app/common/widgets/common_loading_animation.dart';
+export 'package:eve_travel_app/controller/event_controller/profile_flow_controller/profile_controller.dart';
+export 'package:eve_travel_app/common/widgets/common_toast.dart';
+export 'package:eve_travel_app/network_dio/network_dio.dart';
+export 'package:eve_travel_app/utils/process_indicator.dart';
+export 'package:eve_travel_app/controller/event_controller/profile_flow_controller/followers_controller.dart';
+export 'package:eve_travel_app/controller/event_controller/profile_flow_controller/following_controller.dart';
+export 'package:eve_travel_app/common/widgets/common_no_data_animation.dart';
+export 'package:eve_travel_app/controller/auth_controller/reset_password_controller.dart';
+export 'package:eve_travel_app/bindings/auth_binding/forget_password_binding.dart';
+export 'package:eve_travel_app/bindings/auth_binding/reset_password_binding.dart';
+export 'package:eve_travel_app/bindings/event_binding/profile_flow_binding/followers_binding.dart';
+export 'package:eve_travel_app/bindings/event_binding/profile_flow_binding/following_binding.dart';
+export 'package:eve_travel_app/view/authentication/forget_password.dart';
+export 'package:eve_travel_app/view/authentication/reset_password_screen.dart';
+export 'package:eve_travel_app/view/event_flow/profile_flow/followers_screen.dart';
+export 'package:eve_travel_app/view/event_flow/profile_flow/following_screen.dart';
+export 'package:eve_travel_app/view/splash_screen/splash_screen.dart';
+export 'dart:async';

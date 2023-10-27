@@ -2,7 +2,7 @@ class GetEventModel {
   late int status;
   late String message;
   late List<EventData> data;
-  late Map<String, dynamic> error;
+  late Map<String, dynamic>? error;
 
   GetEventModel({
     required this.status,
@@ -35,7 +35,7 @@ class EventData {
   late double longitude;
   late String address;
   late String typeOfEvent;
-  late String cost;
+  late String? cost;
   late String dressCode;
   late List<Participant> participant;
   late bool isFriendInvite;
@@ -59,7 +59,7 @@ class EventData {
     required this.longitude,
     required this.address,
     required this.typeOfEvent,
-    required this.cost,
+    this.cost,
     required this.dressCode,
     required this.participant,
     required this.isFriendInvite,
@@ -74,7 +74,7 @@ class EventData {
 
   EventData.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
-    image = json['image'];
+    image = json['image']??'';
     title = json['title'];
     description = json['description'];
     isAllDay = json['isAllDay'];
@@ -146,6 +146,6 @@ class UserData {
   UserData.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
     image = json['image'];
-    name = json['name'];
+    name = json['name']??'';
   }
 }

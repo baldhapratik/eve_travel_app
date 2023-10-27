@@ -1,7 +1,5 @@
 import 'package:eve_travel_app/app_imports/app_imports.dart';
-import 'package:eve_travel_app/bindings/auth_binding/forget_password_binding.dart';
-import 'package:eve_travel_app/view/authentication/forget_password.dart';
-import 'package:eve_travel_app/view/splash_screen/splash_screen.dart';
+
 
 class AppPages {
   static final pages = [
@@ -69,6 +67,19 @@ class AppPages {
       page: () => const ForgetPasswordScreen(),
       binding: ForgetPasswordBinding(),
     ),
+    GetPage(
+      name: AppRoutes.followersScreen,
+      page: () => const FollowersScreen(),
+      binding: FollowersBinding(),
+    ),
+    GetPage(
+        name: AppRoutes.followingScreen,
+        page: () => const FollowingScreen(),
+        binding: FollowingBinding()),
+    GetPage(
+        name: AppRoutes.resetPasswordScreen,
+        page: () => const ResetPasswordScreen(),
+        binding: ResetPasswordBinding()),
     GetPage(
       name: AppRoutes.splashScreen,
       page: () => const SplashScreen(),

@@ -4,7 +4,10 @@ import 'dart:io';
 import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:eve_travel_app/api/urls.dart';
+import 'package:eve_travel_app/common/widgets/common_toast.dart';
 import 'package:eve_travel_app/repository/network_repository.dart';
+import 'package:eve_travel_app/utils/app_color.dart';
 import 'package:eve_travel_app/utils/internet_error.dart';
 import 'package:eve_travel_app/utils/process_indicator.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +15,7 @@ import 'package:get_storage/get_storage.dart';
 // import '../process_indicator.dart';
 
 class NetworkDioHttp {
-  static Dio? _dio=Dio();
+  static Dio? _dio = Dio();
   static String? endPointUrl;
   static Options? _cacheOptions;
   static DioCacheManager? _dioCacheManager;
@@ -67,8 +70,6 @@ class NetworkDioHttp {
         // ignore: unnecessary_string_interpolations
         Response response =
             await _dio!.get(url, options: header ?? _cacheOptions);
-        // ignore: prefer_typing_uninitialized_variables
-        log(response.toString());
         // ignore: prefer_typing_uninitialized_variables
         var responseBody;
         if (response.statusCode == 200) {
@@ -217,7 +218,7 @@ class NetworkDioHttp {
         log(response.toString());
         // ignore: prefer_typing_uninitialized_variables, use_build_context_synchronously
         if (context != null) processIndicator.hide(context);
-        // ignore: prefer_typing_uninitialized_variables;
+        // ignore: prefer_typing_uninitialized_variables;, prefer_typing_uninitialized_variables
         var responseBody;
         if (response.statusCode == 200) {
           try {
@@ -240,20 +241,21 @@ class NetworkDioHttp {
             'error_description': "Something Went Wrong",
           };
         }
-      } on DioError catch (e,st) {
-
-        print("===1>$e");
-        print("===2>$st");
+      } on DioError catch (e) {
         // ignore: use_build_context_synchronously
         if (context != null) processIndicator.hide(context);
         log(e.message.toString());
-        // log(e.response!.statusMessage.toString());
-        // log(e.response!.statusCode.toString());
-        // ignore: use_build_context_synchronously
         log(
+          // ignore: use_build_context_synchronously
           "await---?${await _handleError(e, context, message: e.response?.data['message'])}",
         );
+        // ignore: use_build_context_synchronously
+        String error = await _handleError(e, context,
+            message: e.response?.data['message']);
         // log(e.message.toString());
+        // customToast(error);
+        customSnackBar('Error', AppColor.redColor, error);
+
         Map<String, dynamic> responseData = {
           'body': e.response?.data,
           'headers': null,
@@ -344,45 +346,40 @@ class NetworkDioHttp {
   }
 
   // //Multiple Concurrent
-  static Future<Map<String, dynamic>> multipleConcurrentDioHttpMethod(
-      {BuildContext? context,
-      required String getUrl,
-      required String postUrl,
-      required Map<String, dynamic> postData}) async {
+  static Future<Map<String, dynamic>> multipleConcurrentDioHttpMethod({
+    BuildContext? context,
+    required String postUrl,
+    required Map<String, dynamic> postData,
+    required Options? header,
+  }) async {
     try {
       if (context != null) processIndicator.show(context);
-      List<Response> response = await Future.wait([
-        _dio!.post("$endPointUrl/$postUrl",
-            data: postData, options: _cacheOptions),
-        _dio!.get("$endPointUrl/$getUrl", options: _cacheOptions)
-      ]);
-      if (response[0].statusCode == 200 || response[0].statusCode == 200) {
-        if (response[0].statusCode == 200 && response[1].statusCode != 200) {
+
+      Response response = await _dio!
+          .post(postUrl, data: postData, options: header ?? _cacheOptions);
+      if (response.statusCode == 200) {
+        if (response.statusCode == 200) {
           // ignore: use_build_context_synchronously
           if (context != null) processIndicator.hide(context);
           return {
-            'getBody': null,
-            'postBody': json.decode(response[0].data),
-            'headers': response[0].headers,
+            'postBody': json.decode(response.data),
+            'headers': response.headers,
             'error_description': null,
           };
-        } else if (response[1].statusCode == 200 &&
-            response[0].statusCode != 200) {
+        } else if (response.statusCode != 200) {
           // ignore: use_build_context_synchronously
           if (context != null) processIndicator.hide(context);
           return {
-            'getBody': null,
-            'postBody': json.decode(response[0].data),
-            'headers': response[0].headers,
+            'postBody': json.decode(response.data),
+            'headers': response.headers,
             'error_description': null,
           };
         } else {
           // ignore: use_build_context_synchronously
           if (context != null) processIndicator.hide(context);
           return {
-            'postBody': json.decode(response[0].data),
-            'getBody': json.decode(response[0].data),
-            'headers': response[0].headers,
+            'postBody': json.decode(response.data),
+            'headers': response.headers,
             'error_description': null,
           };
         }
@@ -391,7 +388,6 @@ class NetworkDioHttp {
         if (context != null) processIndicator.hide(context);
         return {
           'postBody': null,
-          'getBody': null,
           'headers': null,
           'error_description': "Something Went Wrong",
         };
@@ -399,13 +395,59 @@ class NetworkDioHttp {
     } catch (e) {
       Map<String, dynamic> responseData = {
         'postBody': null,
-        'getBody': null,
         'headers': null,
+        // ignore: use_build_context_synchronously
         'error_description': await _handleError(e, context),
       };
       // ignore: use_build_context_synchronously
       if (context != null) processIndicator.hide(context);
       return responseData;
+    }
+  }
+
+  static Future<Map<String, dynamic>> uploadImage(
+      {required String path,
+      required String url}) async {
+    // GlobalController globalController = Get.find();
+    // ImageUploadModel imageUploadModel =await networkRepository.uploadImage(
+    //     token: globalController.token.value, path: file!.path);
+    final String? token = dataStorage.read('token');
+    var headers = {
+      'authorization': token,
+      "Content-Type": "multipart/form-data",
+    };
+    var data = FormData.fromMap({
+      'image': [await MultipartFile.fromFile(path, filename: path)],
+    });
+
+    var dio = Dio();
+    var response = await dio.request(
+      Urls.baseUrl + Urls.uploadImage,
+      options: Options(
+        method: 'POST',
+        headers: headers,
+      ),
+      data: data,
+    );
+    var responseBody;
+    if (response.statusCode == 200) {
+      try {
+        responseBody = json.decode(json.encode(response.data));
+      } catch (error) {
+        debugPrint('decode error');
+        responseBody = response.data;
+      }
+      return {
+        'body': responseBody,
+        'headers': response.headers,
+        'error_description': null,
+      };
+    } else {
+      return {
+        'body': null,
+        'headers': null,
+        'error_description': "Something Went Wrong",
+      };
     }
   }
 

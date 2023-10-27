@@ -13,7 +13,7 @@ class CustomBackButton extends StatelessWidget {
         child: Container(
           height: 24.h,
           width: 24.w,
-          margin: EdgeInsets.symmetric(vertical: 13.h, horizontal: 9.w),
+          margin: EdgeInsets.symmetric(vertical: 13.h, horizontal: 13.w),
           decoration: BoxDecoration(
               image: DecorationImage(
             image: const AssetImage(AppImages.backArrowImg),

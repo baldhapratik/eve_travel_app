@@ -7,15 +7,12 @@ class LoginScreen extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
+        leading: CustomBackButton(
+          color: AppColor.blackColor,
           onTap: () {
-            Get.back();
+            // Get.back();
+            Get.offNamed(AppRoutes.registerScreen);
           },
-          child: Icon(
-            Icons.arrow_back,
-            color: AppColor.blackColor,
-            size: 20.sp,
-          ),
         ),
         elevation: 0,
         backgroundColor: AppColor.whiteColor,
@@ -24,7 +21,7 @@ class LoginScreen extends GetView<LoginController> {
           child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w),
         child: Form(
-          key: controller.formKey,
+          key: controller.loginFormKey,
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -61,7 +58,7 @@ class LoginScreen extends GetView<LoginController> {
                   hintText: AppText.emailAddress,
                 ),
                 SizedBox(
-                  height: 2.h,
+                  height: 12.h,
                 ),
                 Obx(
                   () => CustomTextField(
@@ -155,7 +152,7 @@ class LoginScreen extends GetView<LoginController> {
                   ],
                 ),
                 SizedBox(
-                  height: 24.h,
+                  height: 30.h,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 4.w),
@@ -163,7 +160,7 @@ class LoginScreen extends GetView<LoginController> {
                     () => CustomButton(
                         onTap: () {
                           FocusScope.of(context).unfocus();
-                          if (controller.formKey.currentState!.validate()) {
+                          if (controller.loginFormKey.currentState!.validate()) {
                             controller.loginApiCall(context);
                           }
                         },
@@ -244,10 +241,44 @@ class LoginScreen extends GetView<LoginController> {
                 SizedBox(
                   height: 12.h,
                 ),
-                Text(
-                  AppText.termsAndCondition,
-                  style: TextStyle(fontSize: 13.sp, color: AppColor.greyColor),
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 13.sp,
+                      color: AppColor.greyColor,
+                    ),
+                    children: <TextSpan>[
+                      const TextSpan(
+                          text: 'By continuing, you agree lorem ipsum '),
+                      TextSpan(
+                        text: 'Terms of Service',
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          color: AppColor.primaryColor,
+                        ),
+                      ),
+                      const TextSpan(
+                          text:
+                              ' consecrate. Integer ut hendrerit aliquet gravida ut '),
+                      TextSpan(
+                        text: 'Privacy Policy',
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          color: AppColor.primaryColor,
+                        ),
+                      ),
+                      const TextSpan(text: ', and '),
+                      TextSpan(
+                        text: 'Cookie Policy',
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          color: AppColor.primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+
                 SizedBox(
                   height: 3.h,
                 ),

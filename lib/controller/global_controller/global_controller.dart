@@ -1,12 +1,11 @@
-import 'package:eve_travel_app/view/event_flow/create_event_screen_flow/create_event_screen.dart';
-import 'package:eve_travel_app/view/event_flow/home_screen_flow/home_screen.dart';
-import 'package:eve_travel_app/view/event_flow/massage_flow/massage_screen.dart';
-import 'package:eve_travel_app/view/event_flow/profile_flow/profile_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'dart:developer';
+
+import 'package:eve_travel_app/app_imports/app_imports.dart';
 
 class GlobalController extends GetxController {
-  PageController pageController=PageController();
+  PageController pageController = PageController();
+  RxString token = ''.obs;
+  RxString id = ''.obs;
   final List screens = [
     const HomeScreen(),
     const CreateEventScreen(),
@@ -20,4 +19,15 @@ class GlobalController extends GetxController {
     'assets/images/massage.png',
     'assets/images/profile.png',
   ].obs;
+
+  @override
+  void onInit() {
+    if (getStorage.read('token') != null) {
+      token.value = getStorage.read('token');
+    }
+    if (getStorage.read('id') != null) {
+      token.value = getStorage.read('id');
+    }
+    super.onInit();
+  }
 }

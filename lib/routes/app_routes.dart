@@ -12,5 +12,8 @@ class AppRoutes {
   static const chatScreen = '/ChatScreen';
   static const attendanceScreen = '/AttendanceScreen';
   static const otpScreen = '/OtpScreen';
-  static const forgetPasswordScreen = '/forgetPasswordScreen';
+  static const forgetPasswordScreen = '/ForgetPasswordScreen';
+  static const followersScreen = '/FollowerScreen';
+  static const followingScreen = '/FollowingScreen';
+  static const resetPasswordScreen = '/ResetPasswordScreen';
 }

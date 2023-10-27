@@ -11,16 +11,18 @@ class OtpModel {
     required this.error,
   });
 
-  OtpModel.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    data = Data.fromJson(json['data']);
-    error = json['error'];
+  factory OtpModel.fromJson(Map<String, dynamic> json) {
+    return OtpModel(
+      status: json['status'],
+      message: json['message'],
+      data: json['data'] != null ? Data.fromJson(json['data']) : Data(),
+      error: json['error'] != null ? Map<String, dynamic>.from(json['error']) : {},
+    );
   }
 }
 
 class Data {
-  late String id;
+  String? id;
   String? image;
   String? email;
   String? userName;
@@ -39,7 +41,7 @@ class Data {
   int? v;
 
   Data({
-    required this.id,
+    this.id,
     this.image,
     this.email,
     this.userName,
@@ -58,23 +60,25 @@ class Data {
     this.v,
   });
 
-  Data.fromJson(Map<String, dynamic> json) {
-    id = json['_id'];
-    image = json['image'];
-    email = json['email'];
-    userName = json['userName'];
-    name = json['name'];
-    password = json['password'];
-    otp = json['otp'];
-    followers = json['followers'];
-    following = json['following'];
-    latitude = json['latitude'];
-    longitude = json['longitude'];
-    otpExpireTime = json['otpExpireTime'];
-    city = json['city'];
-    isActive = json['isActive'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    v = json['__v'];
+  factory Data.fromJson(Map<String, dynamic> json) {
+    return Data(
+      id: json['_id'],
+      image: json['image'],
+      email: json['email'],
+      userName: json['userName'],
+      name: json['name'],
+      password: json['password'],
+      otp: json['otp'],
+      followers: json['followers'],
+      following: json['following'],
+      latitude: json['latitude'],
+      longitude: json['longitude'],
+      otpExpireTime: json['otpExpireTime'],
+      city: json['city'],
+      isActive: json['isActive'],
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'],
+      v: json['__v'],
+    );
   }
 }

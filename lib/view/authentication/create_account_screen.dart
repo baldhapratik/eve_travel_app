@@ -7,15 +7,11 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
+        leading: CustomBackButton(
+          color: AppColor.blackColor,
           onTap: () {
-            Get.back();
+            Get.offNamed(AppRoutes.registerScreen);
           },
-          child: Icon(
-            Icons.arrow_back,
-            color: AppColor.blackColor,
-            size: 20.sp,
-          ),
         ),
         elevation: 0,
         backgroundColor: AppColor.whiteColor,
@@ -24,7 +20,7 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
           child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w),
         child: Form(
-          key: controller.formKey,
+          key: controller.createAccountFormKey,
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -62,6 +58,22 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
+                      return AppText.pleaseEnterAnUserName;
+                    }
+                    return null;
+                  },
+                  controller: controller.nameController,
+                  hintText: AppText.userName,
+                ),
+                SizedBox(
+                  height: 12.h,
+                ),
+                CustomTextField(
+                  onChange: (p0) {
+                    controller.validateLoginField();
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
                       return AppText.pleaseEnterAnEmailAddress;
                     }
                     final emailRegExp =
@@ -75,7 +87,7 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                   hintText: AppText.emailAddress,
                 ),
                 SizedBox(
-                  height: 20.h,
+                  height: 12.h,
                 ),
                 Obx(
                   () => CustomTextField(
@@ -103,7 +115,7 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                   ),
                 ),
                 SizedBox(
-                  height: 20.h,
+                  height: 12.h,
                 ),
                 CustomTextField(
                   onChange: (p0) {
@@ -119,7 +131,7 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                   hintText: AppText.cityAddress,
                 ),
                 SizedBox(
-                  height: 10.h,
+                  height: 12.h,
                 ),
                 Row(
                   children: [
@@ -169,7 +181,7 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                   ],
                 ),
                 SizedBox(
-                  height: 26.h,
+                  height: 30.h,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 4.w),
@@ -177,7 +189,8 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                     () => CustomButton(
                         onTap: () {
                           FocusScope.of(context).unfocus();
-                          if (controller.formKey.currentState!.validate()) {
+                          if (controller.createAccountFormKey.currentState!
+                              .validate()) {
                             controller.signUpApiCall(context);
                           }
                         },
@@ -195,8 +208,10 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                 ),
                 Text(
                   AppText.orCreateAccountWith,
-                  style:
-                      TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w400),
+                  style: TextStyle(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.greyColor),
                 ),
                 SizedBox(
                   height: 12.h,
@@ -225,7 +240,7 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                     Text(
                       AppText.alreadyHaveAnAccount,
                       style: TextStyle(
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w600,
                           fontSize: 15.sp,
                           color: AppColor.blackColor),
                     ),
@@ -239,7 +254,7 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                       child: Text(
                         AppText.signIn,
                         style: TextStyle(
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w600,
                             fontSize: 15.sp,
                             color: AppColor.primaryColor),
                       ),
@@ -257,9 +272,42 @@ class CreateAccountScreen extends GetView<CreateAccountController> {
                 SizedBox(
                   height: 12.h,
                 ),
-                Text(
-                  AppText.termsAndCondition,
-                  style: TextStyle(fontSize: 13.sp, color: AppColor.greyColor),
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 13.sp,
+                      color: AppColor.greyColor,
+                    ),
+                    children: <TextSpan>[
+                      const TextSpan(
+                          text: 'By continuing, you agree lorem ipsum '),
+                      TextSpan(
+                        text: 'Terms of Service',
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          color: AppColor.primaryColor,
+                        ),
+                      ),
+                      const TextSpan(
+                          text:
+                              ' consecrate. Integer ut ditherer aliquot gravid ut '),
+                      TextSpan(
+                        text: 'Privacy Policy',
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          color: AppColor.primaryColor,
+                        ),
+                      ),
+                      const TextSpan(text: ', and '),
+                      TextSpan(
+                        text: 'Cookie Policy',
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          color: AppColor.primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 3.h,

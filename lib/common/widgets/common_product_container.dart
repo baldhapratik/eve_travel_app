@@ -37,7 +37,7 @@ class CustomProductContainer extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             border: Border.all(color: AppColor.greyColor.withOpacity(0.5))),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -48,7 +48,7 @@ class CustomProductContainer extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
-                        image: AssetImage(productImage), fit: BoxFit.fill)),
+                        image: NetworkImage(productImage), fit: BoxFit.fill)),
                 child: Padding(
                   padding: EdgeInsets.only(right: 15.w, top: 10.h),
                   child: Row(
@@ -157,6 +157,8 @@ class CustomProductContainer extends StatelessWidget {
               //       )
               //     : const SizedBox(),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Stack(
                     children: [
@@ -208,6 +210,7 @@ class CustomProductContainer extends StatelessWidget {
                           image: const AssetImage(AppImages.chatImg),
                           width: 20.w,
                           height: 20.h,
+                          fit: BoxFit.fill,
                         ),
                         SizedBox(
                           width: 6.w,

@@ -7,16 +7,11 @@ class ForgetPasswordScreen extends GetView<ForgetPasswordController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: InkWell(
+          leading: CustomBackButton(
+            color: AppColor.blackColor,
             onTap: () {
               Get.back();
-            },
-            child: Icon(
-              Icons.arrow_back,
-              color: AppColor.blackColor,
-              size: 20.sp,
-            ),
-          ),
+            },),
           elevation: 0,
           backgroundColor: AppColor.whiteColor,
         ),
@@ -36,6 +31,17 @@ class ForgetPasswordScreen extends GetView<ForgetPasswordController> {
                               fontWeight: FontWeight.w600,
                               color: AppColor.blackColor,
                               fontSize: 20.sp),
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        Text(
+                          AppText.enterYourEvent,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.greyColor,
+                              fontSize: 15.sp),
                         ),
                         SizedBox(
                           height: 32.h,
@@ -64,21 +70,21 @@ class ForgetPasswordScreen extends GetView<ForgetPasswordController> {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 4.w),
                           child: Obx(
-                            () => CustomButton(
-                                onTap: () {
-                                  FocusScope.of(context).unfocus();
-                                  if (controller.validate.isTrue) {
-                                    controller.forgetApiCall(context);
-                                    // controller.loginApiCall(context);
-                                  }
-                                },
-                                labelColor: controller.validate.value
-                                    ? AppColor.whiteColor
-                                    : AppColor.blackColor.withOpacity(0.4),
-                                buttonColor: controller.validate.value
-                                    ? AppColor.primaryColor
-                                    : AppColor.greyColor.withOpacity(0.2),
-                                labelName: AppText.signIn),
+                                () =>
+                                CustomButton(
+                                    onTap: () {
+                                      FocusScope.of(context).unfocus();
+                                      if (controller.validate.isTrue) {
+                                        controller.forgetApiCall(context);
+                                      }
+                                    },
+                                    labelColor: controller.validate.value
+                                        ? AppColor.whiteColor
+                                        : AppColor.blackColor.withOpacity(0.4),
+                                    buttonColor: controller.validate.value
+                                        ? AppColor.primaryColor
+                                        : AppColor.greyColor.withOpacity(0.2),
+                                    labelName: AppText.submit),
                           ),
                         ),
                       ]),

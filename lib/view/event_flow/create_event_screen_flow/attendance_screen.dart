@@ -6,7 +6,7 @@ class AttendanceScreen extends GetView<CreateEventController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.selectIndex.value=0;
+    controller.selectIndex.value = 0;
     return Scaffold(
       appBar: AppBar(
           backgroundColor: AppColor.primaryColor,

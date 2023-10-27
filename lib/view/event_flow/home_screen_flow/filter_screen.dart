@@ -1,14 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:eve_travel_app/app_imports/app_imports.dart';
+import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-class FilterScreen extends GetView<FilterScreenController> {
+class FilterScreen extends GetView<HomeController> {
   const FilterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    DateRangePickerSelectionChangedArgs? arguments;
+
     return Scaffold(
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+        child: CustomButton(
+            onTap: () {
+              Get.back();
+              controller.getEventApiCall();
+            },
+            labelColor: AppColor.whiteColor,
+            buttonColor: AppColor.primaryColor,
+            labelName: 'Apply'),
+      ),
       appBar: AppBar(
         leading: CustomBackButton(
+          color: AppColor.whiteColor,
           onTap: () {
             Get.back();
           },
@@ -30,6 +46,9 @@ class FilterScreen extends GetView<FilterScreenController> {
                 controller.selectedCategoryIndices.clear();
                 controller.selectedMoodIndices.clear();
                 controller.selectedBudgetIndices.clear();
+                controller.switchValue.value=false;
+                controller.startDate.value='';
+                controller.endDate.value='';
               },
               child: Text(
                 AppText.clearAll,
@@ -156,7 +175,6 @@ class FilterScreen extends GetView<FilterScreenController> {
                     },
                     child: Container(
                       height: 33.h,
-
                       decoration: BoxDecoration(
                         boxShadow: isSelected
                             ? [
@@ -259,7 +277,6 @@ class FilterScreen extends GetView<FilterScreenController> {
                     },
                     child: Container(
                       height: 33.h,
-
                       decoration: BoxDecoration(
                         boxShadow: isSelected
                             ? [
@@ -296,14 +313,86 @@ class FilterScreen extends GetView<FilterScreenController> {
             ),
           ),
           SizedBox(
-            height: 12.h,
+            height: 20.h,
           ),
-          Text(
-            AppText.chooseADate,
-            style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: AppColor.blueColor,
-                fontSize: 15.sp),
+          InkWell(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    elevation: 0,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10.w),
+                    content: Padding(
+                      padding: EdgeInsets.only(top: 20.h),
+                      child: SizedBox(
+                        height: 400.h,
+                        width: 400.w,
+                        child: SfDateRangePicker(
+                          view: DateRangePickerView.month,
+                          selectionMode: DateRangePickerSelectionMode.range,
+                          onSelectionChanged:
+                              (DateRangePickerSelectionChangedArgs args) {
+                            arguments = args;
+                          },
+                        ),
+                      ),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: const Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          if (arguments != null) {
+                            if (arguments!.value.endDate != null) {
+                              controller.startDate.value =
+                                  arguments!.value.startDate.toString();
+                              controller.endDate.value =
+                                  arguments!.value.endDate.toString();
+                            }
+                          }
+                          Get.back();
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: Text(
+              AppText.chooseADate,
+              style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: AppColor.blueColor,
+                  fontSize: 15.sp),
+            ),
+          ),
+          SizedBox(
+            height: 5.h,
+          ),
+          Row(
+            children: [
+              Obx(() => Text(controller.startDate.isNotEmpty
+                  ? DateFormat('dd - MM - yyyy')
+                      .format(DateTime.parse(controller.startDate.value))
+                  : '')),
+              SizedBox(
+                width: 10.w,
+              ),
+              Obx(() =>  Text(controller.startDate.isNotEmpty?':':'')),
+              SizedBox(
+                width: 10.w,
+              ),
+              Obx(() => Text(controller.endDate.isNotEmpty
+                  ? DateFormat('dd - MM - yyyy')
+                      .format(DateTime.parse(controller.endDate.value))
+                  : '')),
+            ],
           ),
           SizedBox(
             height: 1.h,

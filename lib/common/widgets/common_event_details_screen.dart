@@ -1,14 +1,16 @@
 import 'package:eve_travel_app/app_imports/app_imports.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:eve_travel_app/model/get_event_model.dart';
+import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CustomEventDetailsScreen extends StatelessWidget {
-  CustomEventDetailsScreen({super.key});
+  final EventData eventData;
 
-  late GoogleMapController mapController;
-  RxBool readMore = true.obs;
+  const CustomEventDetailsScreen({super.key, required this.eventData});
 
   @override
   Widget build(BuildContext context) {
+    RxBool readMore = true.obs;
     return Scaffold(
         bottomNavigationBar: SizedBox(
           height: 60.h,
@@ -99,8 +101,8 @@ class CustomEventDetailsScreen extends StatelessWidget {
                 height: 200.h,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    image: const DecorationImage(
-                        image: AssetImage('assets/images/dummyItem.png'),
+                    image: DecorationImage(
+                        image: NetworkImage(eventData.image),
                         fit: BoxFit.fill)),
               ),
               SizedBox(
@@ -110,7 +112,7 @@ class CustomEventDetailsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Sushimaking Class',
+                    eventData.title,
                     style:
                         TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
                   ),
@@ -124,7 +126,7 @@ class CustomEventDetailsScreen extends StatelessWidget {
                 ],
               ),
               Text(
-                r'$155',
+                eventData.cost??'',
                 style: TextStyle(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w600,
@@ -133,217 +135,123 @@ class CustomEventDetailsScreen extends StatelessWidget {
               SizedBox(
                 height: 25.h,
               ),
+              // Container(
+              //   height: 70.h,
+              //   padding: EdgeInsets.symmetric(horizontal: 10.w),
+              //   decoration: BoxDecoration(
+              //       color: AppColor.lightBlueColor,
+              //       borderRadius: BorderRadius.circular(10)),
+              //   child: Center(
+              //     child: ListTile(
+              //       leading: SizedBox(
+              //         height: 20.h,
+              //         width: 20.w,
+              //         child: Padding(
+              //           padding: EdgeInsets.only(top: 3.h),
+              //           child: const Image(
+              //             image: AssetImage(AppImages.clockImg),
+              //             fit: BoxFit.fill,
+              //           ),
+              //         ),
+              //       ),
+              //       title: Text(
+              //         'Saturday, 23 September 2023',
+              //         style: TextStyle(
+              //             fontWeight: FontWeight.w400, fontSize: 14.sp),
+              //       ),
+              //       subtitle: Row(
+              //         children: [
+              //           Text(
+              //             '13:00 - 14:00',
+              //             style: TextStyle(
+              //                 fontWeight: FontWeight.w400, fontSize: 12.sp),
+              //           ),
+              //           SizedBox(
+              //             width: 4.w,
+              //           ),
+              //           Text(
+              //             'Los Angles Time',
+              //             style: TextStyle(
+              //                 fontWeight: FontWeight.w400, fontSize: 12.sp),
+              //           ),
+              //         ],
+              //       ),
+              //       trailing: Container(
+              //           height: 32.h,
+              //           width: 32.h,
+              //           padding: EdgeInsets.symmetric(
+              //               horizontal: 7.w, vertical: 7.h),
+              //           decoration: const BoxDecoration(
+              //               shape: BoxShape.circle,
+              //               color: AppColor.primaryColor),
+              //           child: const Image(
+              //               image: AssetImage(AppImages.calenderImg))),
+              //       contentPadding: EdgeInsets.zero,
+              //     ),
+              //   ),
+              // ),
+
               Container(
-                height: 70.h,
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 13.h),
                 decoration: BoxDecoration(
                     color: AppColor.lightBlueColor,
                     borderRadius: BorderRadius.circular(10)),
-                child: Center(
-                  child: ListTile(
-                    leading: SizedBox(
-                      height: 20.h,
-                      width: 20.w,
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 3.h),
-                        child: const Image(
-                          image: AssetImage(AppImages.clockImg),
-                          fit: BoxFit.fill,
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 12.w,
+                      ),
+                      SizedBox(
+                        height: 22.h,
+                        width: 20.w,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 5.h),
+                          child: const Image(
+                            image: AssetImage(AppImages.clockImg),
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
-                    ),
-                    title: Text(
-                      'Saturday, 23 September 2023',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400, fontSize: 14.sp),
-                    ),
-                    subtitle: Row(
-                      children: [
-                        Text(
-                          '13:00 - 14:00',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 12.sp),
-                        ),
-                        SizedBox(
-                          width: 4.w,
-                        ),
-                        Text(
-                          'Los Angles Time',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 12.sp),
-                        ),
-                      ],
-                    ),
-                    trailing: Container(
-                        height: 32.h,
-                        width: 32.h,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 7.w, vertical: 7.h),
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColor.primaryColor),
-                        child: const Image(
-                            image: AssetImage(AppImages.calenderImg))),
-                    contentPadding: EdgeInsets.zero,
-                  ),
-                ),
+                      SizedBox(
+                        width: 12.w,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        // mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            DateFormat('EEEE, d MMMM y')
+                                .format(DateTime.parse(eventData.createdAt)),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 14.sp),
+                          ),
+                          Text(
+                            '${DateFormat('dd:MM:yyyy').format(DateTime.parse(eventData.startDate))} - ${DateFormat('dd:MM:yyyy').format(DateTime.parse(eventData.endDate))} ${eventData.address}',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 12.sp),
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      Padding(
+                        padding: EdgeInsets.only(top: 3.h),
+                        child: Container(
+                            height: 35.h,
+                            width: 32.h,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 7.w, vertical: 7.h),
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColor.primaryColor),
+                            child: const Image(
+                                image: AssetImage(AppImages.calenderImg))),
+                      ),
+                      SizedBox(
+                        width: 12.w,
+                      ),
+                    ]),
               ),
-              // SizedBox(
-              //   height: 45.h,
-              //   child: ListView.separated(
-              //     scrollDirection: Axis.horizontal,
-              //     itemBuilder: (context, index) {
-              //       return Container(
-              //         height: 30.0,
-              //         padding:
-              //             EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-              //         decoration: BoxDecoration(
-              //           borderRadius: BorderRadius.circular(40.0),
-              //           border: Border.all(
-              //             color: AppColor.greyColor,
-              //             width: 1,
-              //           ),
-              //         ),
-              //         child: Center(
-              //           child: Text(
-              //             'Dinner / Drinks',
-              //             style: TextStyle(
-              //               fontWeight: FontWeight.w600,
-              //               color: AppColor.blackColor.withOpacity(0.8),
-              //               fontSize: 13.sp,
-              //             ),
-              //           ),
-              //         ),
-              //       );
-              //     },
-              //     itemCount: 5,
-              //     separatorBuilder: (BuildContext context, int index) =>
-              //         SizedBox(width: 8.w),
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 20.h,
-              // ),
-              // ListTile(
-              //   leading: Container(
-              //     height: 40.h,
-              //     width: 40.w,
-              //     decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(10),
-              //         color: AppColor.whiteColor,
-              //         boxShadow: [
-              //           BoxShadow(
-              //             blurRadius: 12,
-              //             spreadRadius: 0,
-              //             color: AppColor.greyColor.withOpacity(0.2),
-              //             offset: const Offset(0, 4),
-              //           )
-              //         ]),
-              //     child: Container(
-              //       height: 20.h,
-              //       width: 20.w,
-              //       padding:
-              //           EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-              //       child: const Image(
-              //         image: AssetImage(AppImages.calenderClockImg),
-              //       ),
-              //     ),
-              //   ),
-              //   title: Text(
-              //     'Sat, 23 Sep 2023 • 13:00 - 14:00 PM',
-              //     style:
-              //         TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600),
-              //   ),
-              //   subtitle: Text(
-              //     'Make a calendar reminder',
-              //     style: TextStyle(
-              //         fontWeight: FontWeight.w400,
-              //         color: AppColor.greyColor,
-              //         fontSize: 11.sp),
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 20.h,
-              // ),
-              // ListTile(
-              //   leading: Container(
-              //     height: 40.h,
-              //     width: 40.w,
-              //     decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(10),
-              //         color: AppColor.whiteColor,
-              //         boxShadow: [
-              //           BoxShadow(
-              //             blurRadius: 12,
-              //             spreadRadius: 0,
-              //             color: AppColor.greyColor.withOpacity(0.2),
-              //             offset: const Offset(0, 4),
-              //           )
-              //         ]),
-              //     child: Container(
-              //       height: 20.h,
-              //       width: 20.w,
-              //       padding:
-              //           EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-              //       child: const Image(
-              //         image: AssetImage(AppImages.mapImg),
-              //       ),
-              //     ),
-              //   ),
-              //   title: Text(
-              //     'Rishtedar, Miami, USA',
-              //     style:
-              //         TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600),
-              //   ),
-              //   subtitle: Text(
-              //     'Open in the map',
-              //     style: TextStyle(
-              //         fontWeight: FontWeight.w400,
-              //         color: AppColor.greyColor,
-              //         fontSize: 11.sp),
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 20.h,
-              // ),
-              // ListTile(
-              //   leading: Container(
-              //     height: 40.h,
-              //     width: 40.w,
-              //     decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(10),
-              //         color: AppColor.whiteColor,
-              //         boxShadow: [
-              //           BoxShadow(
-              //             blurRadius: 12,
-              //             spreadRadius: 0,
-              //             color: AppColor.greyColor.withOpacity(0.2),
-              //             offset: const Offset(0, 4),
-              //           )
-              //         ]),
-              //     child: Container(
-              //       height: 20.h,
-              //       width: 20.w,
-              //       padding:
-              //           EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-              //       child: const Image(
-              //         image: AssetImage(AppImages.joinGroupImg),
-              //       ),
-              //     ),
-              //   ),
-              //   title: Text(
-              //     'Join group chat',
-              //     style:
-              //         TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600),
-              //   ),
-              //   subtitle: Text(
-              //     'Make a calendar reminder',
-              //     style: TextStyle(
-              //         fontWeight: FontWeight.w400,
-              //         color: AppColor.greyColor,
-              //         fontSize: 11.sp),
-              //   ),
-              // ),
               SizedBox(
                 height: 25.h,
               ),
@@ -352,7 +260,7 @@ class CustomEventDetailsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Hosting (1)',
+                      'Hosting ${eventData.participant.where((element) => element.isHost).length.toString()}',
                       style: TextStyle(
                           fontWeight: FontWeight.w600, fontSize: 15.sp),
                     ),
@@ -428,8 +336,8 @@ class CustomEventDetailsScreen extends StatelessWidget {
               ),
               Obx(
                 () => Text(
-                  '👋 Welcome to Sushimaking Class dolor sit amet!!! Tincidunt arcu tellus nisl in in nisl lobortis. Venenatis in aenean tortor natoque tincidunt donec amet. Dictum at lobortis ornare justo nulla morbi malesuada sit. Fringilla arcu faucibus elementum sociis'
-                  '${readMore.isTrue ? '...' : 'Welcome to Sushimaking Class dolor sit amet!!! Tincidunt arcu tellus nisl in in nisl lobortis. Venenatis in aenean.'}',
+                  '${eventData.description} ${readMore.isTrue ? '...' : ''}',
+                  maxLines: readMore.isTrue ? 3 : null,
                   style:
                       TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600),
                 ),
@@ -473,7 +381,7 @@ class CustomEventDetailsScreen extends StatelessWidget {
                       height: 12.h,
                     ),
                     Text(
-                      'Rishtedar',
+                      eventData.address,
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 15.sp,
@@ -483,7 +391,7 @@ class CustomEventDetailsScreen extends StatelessWidget {
                       height: 5.h,
                     ),
                     Text(
-                      '232 NW 24th St, Miami, FL 33127, USA',
+                      '${eventData.latitude.toString()}  ${eventData.longitude.toString()}',
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 13.sp,
@@ -495,12 +403,17 @@ class CustomEventDetailsScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'Go to map',
-                          style: TextStyle(
-                              color: AppColor.primaryColor,
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w600),
+                        InkWell(
+                          onTap: () {
+                            openMap(eventData.latitude, eventData.longitude);
+                          },
+                          child: Text(
+                            'Go to map',
+                            style: TextStyle(
+                                color: AppColor.primaryColor,
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w600),
+                          ),
                         ),
                         Icon(
                           Icons.arrow_forward,
@@ -523,7 +436,6 @@ class CustomEventDetailsScreen extends StatelessWidget {
                 height: 10.h,
               ),
               Container(
-                height: 110.h,
                 decoration: BoxDecoration(
                     color: AppColor.lightBlueColor,
                     borderRadius: BorderRadius.circular(10)),
@@ -546,7 +458,7 @@ class CustomEventDetailsScreen extends StatelessWidget {
                           fontSize: 15.sp, fontWeight: FontWeight.w600),
                     ),
                     trailing: Text(
-                      'Dinner /Drinks',
+                      eventData.typeOfEvent,
                       style: TextStyle(
                           fontWeight: FontWeight.w400, fontSize: 15.sp),
                     ),
@@ -569,7 +481,7 @@ class CustomEventDetailsScreen extends StatelessWidget {
                           fontSize: 15.sp, fontWeight: FontWeight.w600),
                     ),
                     trailing: Text(
-                      'Not specified',
+                      eventData.dressCode,
                       style: TextStyle(
                           fontWeight: FontWeight.w400, fontSize: 15.sp),
                     ),
@@ -582,5 +494,15 @@ class CustomEventDetailsScreen extends StatelessWidget {
             ]),
           ),
         ));
+  }
+
+  void openMap(double latitude, double longitude) async {
+    String googleUrl =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    if (await canLaunch(googleUrl)) {
+      await launch(googleUrl);
+    } else {
+      throw 'Could not open the map.';
+    }
   }
 }

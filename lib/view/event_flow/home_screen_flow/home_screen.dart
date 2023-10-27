@@ -1,5 +1,5 @@
 import 'package:eve_travel_app/app_imports/app_imports.dart';
-import 'package:eve_travel_app/common/widgets/common_event_details_screen.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class HomeScreen extends GetView<HomeController> {
             Row(
               children: [
                 Text(
-                  AppText.myEvents,
+                  AppText.allEvents,
                   style:
                       TextStyle(fontWeight: FontWeight.w600, fontSize: 20.sp),
                 ),
@@ -31,18 +31,18 @@ class HomeScreen extends GetView<HomeController> {
                 SizedBox(
                   width: 20.w,
                 ),
-                Image(
-                  image: const AssetImage(AppImages.userAddImg),
-                  color: AppColor.blackColor,
-                  width: 20.w,
-                  height: 20.h,
-                  fit: BoxFit.fill,
-                ),
+                // Image(
+                //   image: const AssetImage(AppImages.userAddImg),
+                //   color: AppColor.blackColor,
+                //   width: 20.w,
+                //   height: 20.h,
+                //   fit: BoxFit.fill,
+                // ),
               ],
             ),
             SizedBox(height: 12.h),
             CustomRoundShapeTextField(
-                leadingIcon: Icon(Icons.search, size: 20.sp),
+                leadingIcon: Icon(Icons.search, size: 25.sp),
                 controller: controller.searchController,
                 hintText: AppText.search),
             SizedBox(height: 8.h),
@@ -101,7 +101,8 @@ class HomeScreen extends GetView<HomeController> {
                                 height: 33.h,
                                 width: 95.w,
                                 decoration: BoxDecoration(
-                                    color: controller.selectIndex.value == index
+                                    color: controller.selectIndex.value ==
+                                            index
                                         ? AppColor.darkBlueColor
                                         : AppColor.greyColor.withOpacity(0.4),
                                     borderRadius: BorderRadius.circular(10)),
@@ -109,10 +110,10 @@ class HomeScreen extends GetView<HomeController> {
                                     child: Text(
                                   controller.filterList[index],
                                   style: TextStyle(
-                                      color:
-                                          controller.selectIndex.value == index
-                                              ? AppColor.whiteColor
-                                              : AppColor.blackColor),
+                                      color: controller.selectIndex.value ==
+                                              index
+                                          ? AppColor.whiteColor
+                                          : AppColor.blackColor),
                                 ))),
                           ),
                         );
@@ -123,19 +124,21 @@ class HomeScreen extends GetView<HomeController> {
                         );
                       },
                       itemCount: controller.filterList.length),
-                )),
+                ))
               ],
             ),
             SizedBox(height: 2.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  '243 events',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15.sp,
-                      color: AppColor.blackColor),
+                Obx(
+                  () => Text(
+                    '${controller.eventList.length} events',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15.sp,
+                        color: AppColor.blackColor),
+                  ),
                 ),
                 Row(
                   children: [
@@ -174,9 +177,11 @@ class HomeScreen extends GetView<HomeController> {
                             value: value,
                             child: Text(value,
                                 style: TextStyle(
-                                    color: AppColor.blackColor,
+                                    color: AppColor
+                                        .blackColor,
                                     fontSize: 13.sp,
-                                    fontWeight: FontWeight.w400)),
+                                    fontWeight:
+                                    FontWeight.w400)),
                           );
                         }).toList(),
                       ),
@@ -185,33 +190,45 @@ class HomeScreen extends GetView<HomeController> {
                 ),
               ],
             ),
-            Expanded(
-              child: ListView.separated(
-                  padding: EdgeInsets.symmetric(vertical: 12.h),
-                  itemBuilder: (context, index) {
-                    return CustomProductContainer(
-                      friendsInterested: '3 friends interested',
-                      friendsImages: const [
-                        'assets/images/Mask group.png',
-                        'assets/images/Mask group-1.png',
-                        'assets/images/Mask group-2.png',
-                      ],
-                      productImage: 'assets/images/dummy.png',
-                      dateTime: '31 October, 3 pm',
-                      productName:
-                          'MIAMI Halloween Party Cruise - Pier Pressure BlackPearlYacht',
-                      location: 'Paperfish, Brickell, Miami, FL',
-                      productPrice: r'$50',
-                      onTapContainer: () {
-                        Get.to(CustomEventDetailsScreen());
-                      },
-                      onTapChat: () {},
-                      onTapNotification: () {},
-                      onTapShare: () {},
-                    );
-                  },
-                  separatorBuilder: (context, index) => SizedBox(height: 12.h),
-                  itemCount: 10),
+            Obx(
+              () => controller.loading.isFalse
+                  ? Expanded(
+                      child:  RefreshIndicator(
+                        onRefresh: () => controller.getEventApiCall(),
+                        child: ListView.separated(
+                            padding: EdgeInsets.symmetric(vertical: 12.h),
+                            itemBuilder: (context, index) {
+                              return CustomProductContainer(
+                                friendsInterested: '3 friends interested',
+                                friendsImages: const [
+                                  'assets/images/Mask group.png',
+                                  'assets/images/Mask group-1.png',
+                                  'assets/images/Mask group-2.png',
+                                ],
+                                productImage: controller.eventList[index].image,
+                                dateTime:
+                                    '${DateFormat('dd:MM:yyyy').format(DateTime.parse(controller.eventList[index].startDate))} - ${DateFormat('dd:MM:yyyy').format(DateTime.parse(controller.eventList[index].endDate))}',
+                                productName: controller.eventList[index].title,
+                                location: controller.eventList[index].address,
+                                productPrice:
+                                    controller.eventList[index].cost ?? '',
+                                onTapContainer: () {
+                                  Get.to(CustomEventDetailsScreen(
+                                    eventData: controller.eventList[index],
+                                  ));
+                                },
+                                onTapChat: () {},
+                                onTapNotification: () {},
+                                onTapShare: () {},
+                              );
+                            },
+                            separatorBuilder: (context, index) =>
+                                SizedBox(height: 15.h),
+                            itemCount: controller.eventList.length),
+                      ),
+                    )
+                  : const Expanded(
+                      child: Center(child: CustomLoadingAnimation())),
             )
           ],
         ),

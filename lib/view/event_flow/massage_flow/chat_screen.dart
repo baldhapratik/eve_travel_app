@@ -1,6 +1,6 @@
 import 'package:eve_travel_app/app_imports/app_imports.dart';
 
-class ChatScreen extends GetView<ChatScreenController> {
+class ChatScreen extends GetView<MassageController> {
   const ChatScreen({super.key});
 
   @override
